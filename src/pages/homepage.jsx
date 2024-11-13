@@ -6,6 +6,7 @@ import Product from '@/Components/Products/product.jsx';
 import Explore_solution_sec from '@/Components/Home/explore_solution_sec.jsx';
 import HomeVideoSec from '@/Components/Home/homevideo_Sec.jsx';
 import HomeMaplic from '@/Components/Home/homemaplic.jsx';
+import SVGComponent from '@/Components/Svgmapping/svgmapping.jsx';
 
 
 
@@ -18,7 +19,8 @@ const Homepage = () => {
       <Product/>
       <Explore_solution_sec/>
       <HomeVideoSec/>
-      <HomeMaplic/>
+      {/* <HomeMaplic/> */}
+      <SVGComponent/>
 
       </>
    

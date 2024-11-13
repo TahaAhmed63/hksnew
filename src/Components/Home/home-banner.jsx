@@ -10,6 +10,9 @@ import 'swiper/css/navigation';
 
 // Import required modules
 import { Navigation } from 'swiper/modules';
+// Import Framer Motion
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 // Define images and corresponding text content
 const slides = [
@@ -40,34 +43,55 @@ const slides = [
   // Add more slides as needed
 ];
 
-
 export default function App() {
+  const [key, setKey] = useState(0);  // State to trigger animation on slide change
+
+  const handleSlideChange = (swiper) => {
+    setKey(prevKey => prevKey + 1); // Increment key to force re-animation on slide change
+  };
+
   return (
     <>
-      <Swiper navigation={false} modules={[Navigation]} className="mySwiper">
+      <Swiper
+        navigation={true}
+        modules={[Navigation]}
+        className="mySwiper"
+        onSlideChange={handleSlideChange} // Trigger on slide change
+      >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
             <Image src={slide.src} alt={slide.alt} />
             <div className="container swiper-content">
               <p className="py-md-4">
-              {slide.descriptions.map((descrip, i) => (
+                {slide.descriptions.map((descrip, i) => (
                   <span key={i}>
                     {descrip}
                     {i < slide.descriptions.length - 1 && <br />}
                   </span>
                 ))}
-              
-              
               </p>
-              <h1 className="m-0">
+
+              {/* Motion H1 with Slide Change Animation */}
+              <motion.h1
+                key={key} // Force remount on key change to trigger animation
+                className="m-0"
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  duration: 2,  // Slower animation duration
+                  delay: 1, 
+                  type: 'spring',
+                  stiffness: 100,
+                  damping: 25,
+                }}
+              >
                 {slide.headings.map((heading, i) => (
                   <span key={i}>
                     {heading}
                     {i < slide.headings.length - 1 && <br />}
                   </span>
                 ))}
-              </h1>
-             
+              </motion.h1>
             </div>
           </SwiperSlide>
         ))}
