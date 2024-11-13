@@ -5,7 +5,7 @@ import Shop from "./shop";
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="en" suppressHydrationWarning={true}>
       <Head />
 
       <body className="antialiased">

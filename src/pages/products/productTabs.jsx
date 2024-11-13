@@ -1,105 +1,75 @@
-// components/ProductTabs.js
-import { useState } from 'react';
+"use-client";
+import { useState, useEffect } from "react";
 
-const ProductTabs = () => {
-  const [activeTab, setActiveTab] = useState('description');
+const ProductTabs = ({ productData }) => {
+  const [isClient, setIsClient] = useState(false); // Track client-side rendering
+  const [activeTab, setActiveTab] = useState("description");
+  const [parsedDescription, setParsedDescription] = useState(null); // Start with null to avoid hydration issues
+  const [isDataReady, setIsDataReady] = useState(false); // Track if data is ready
 
+  useEffect(() => {
+    setIsClient(true); // Ensure client-side rendering
+  }, []);
+
+  useEffect(() => {
+    if (productData) {
+      const parsedData = parseDescriptionToObject(productData);
+      setParsedDescription(parsedData);
+      setIsDataReady(true); // Data ready for rendering
+    }
+  }, [productData]);
+
+  function parseDescriptionToObject(description) {
+    // Extract content between tags using regular expressions
+    const getTagContent = (tag) => {
+      const regex = new RegExp(`<${tag}[^>]*>(.*?)</${tag}>`, "is");
+      const match = description.match(regex);
+      return match ? match[1].trim() : "";
+    };
+
+    return {
+      description: getTagContent("h2"),
+      customerBenefits: getTagContent("h3"), // First <h3> tag content
+      preservesPower: getTagContent("h3"), // Second <h3> tag content if needed
+      savesOnMaintenance: getTagContent("h3"), // Third <h3> tag content if needed
+      technicalDetails: getTagContent("table"), // Get entire table as plain content
+    };
+  }
+const mainTable = `<table>${parsedDescription.technicalDetails}</table>`
   const tabs = [
     {
-      id: 'description',
-      title: 'Description',
-      content: (
+      id: "description",
+      title: "Description",
+      content: isDataReady && parsedDescription ? (
         <div className="custom-tab-content">
           <h3><strong>Customer benefits</strong></h3>
-          <p>Proven metal-organic anti-wear additive system protects engines under all operating conditions by providing excellent wear control in even the most sophisticated valve train mechanisms, including those with variable valve timing. Multi-grade viscosity provides additional protection against wear at start-up and under high temperature operating conditions.</p>
+          <p      dangerouslySetInnerHTML={{ __html: parsedDescription.customerBenefits }} />
           <h3><strong>Preserves power & performance</strong></h3>
-          <p>Metallic detergent and ashless dispersant additive system preserves power and performance by providing good control of piston and ring deposits.</p>
+          <p>{parsedDescription.preservesPower}</p>
           <h3><strong>Saves on maintenance</strong></h3>
-          <p>Good thermal and oxidation stability resists in-service oil degradation that contributes to filter blocking and sludge formation.</p>
+          <p>{parsedDescription.savesOnMaintenance}</p>
         </div>
+      ) : (
+        <div>Loading...</div> // Placeholder until data is ready
       ),
     },
     {
-      id: 'technical-details',
-      title: 'Technical Detail',
-      content: (
-        <table className="min-w-full border-collapse border border-gray-300">
-        <thead>
-          <tr>
-            <th className="border border-gray-300 p-2 text-left font-bold">S.No</th>
-            <th className="border border-gray-300 p-2 text-left font-bold">ASTM METHODS</th>
-            <th className="border border-gray-300 p-2 text-left font-bold">ANALYSIS</th>
-            <th className="border border-gray-300 p-2 text-left font-bold">Results</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="border border-gray-300 p-2">1</td>
-            <td className="border border-gray-300 p-2"></td>
-            <td className="border border-gray-300 p-2">Appearance</td>
-            <td className="border border-gray-300 p-2">Clear</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 p-2">2</td>
-            <td className="border border-gray-300 p-2">ASTM D-1500</td>
-            <td className="border border-gray-300 p-2">Color (ASTM)</td>
-            <td className="border border-gray-300 p-2">L3.5</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 p-2">3</td>
-            <td className="border border-gray-300 p-2">ASTM D-1298</td>
-            <td className="border border-gray-300 p-2">Density @ 85 °F (29.5 °C)</td>
-            <td className="border border-gray-300 p-2">0.8795</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 p-2">4</td>
-            <td className="border border-gray-300 p-2">ASTM D-445</td>
-            <td className="border border-gray-300 p-2">Kinematic Viscosity @100 °C.eSt</td>
-            <td className="border border-gray-300 p-2">19.42</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 p-2">5</td>
-            <td className="border border-gray-300 p-2">ASTM D-445</td>
-            <td className="border border-gray-300 p-2">Kinematic Viscosity @40 °C.eSt</td>
-            <td className="border border-gray-300 p-2">165.35</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 p-2">6</td>
-            <td className="border border-gray-300 p-2">ASTM D-2270</td>
-            <td className="border border-gray-300 p-2">Viscosity Index</td>
-            <td className="border border-gray-300 p-2">135</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 p-2">7</td>
-            <td className="border border-gray-300 p-2">ASTM D-2896</td>
-            <td className="border border-gray-300 p-2">TBN mg KOH/gm</td>
-            <td className="border border-gray-300 p-2">4.61</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 p-2">8</td>
-            <td className="border border-gray-300 p-2">ASTM D-92</td>
-            <td className="border border-gray-300 p-2">Flash Point COC °C</td>
-            <td className="border border-gray-300 p-2">232</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 p-2">9</td>
-            <td className="border border-gray-300 p-2">ASTM D-97</td>
-            <td className="border border-gray-300 p-2">Pour Point °C</td>
-            <td className="border border-gray-300 p-2">-21</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-300 p-2">10</td>
-            <td className="border border-gray-300 p-2"></td>
-            <td className="border border-gray-300 p-2">Water by Crackle Test</td>
-            <td className="border border-gray-300 p-2">Negative</td>
-          </tr>
-        </tbody>
-      </table>
+      id: "technical-details",
+      title: "Technical Detail",
+      content: isDataReady && parsedDescription ? (
+        <div className="technical-details">
+            <div
+      className="technical-details-table"
+      dangerouslySetInnerHTML={{ __html: mainTable }}
+    />
+        </div>
+      ) : (
+        <div>Loading...</div> // Placeholder until data is ready
       ),
     },
     {
-      id: 'additional-information',
-      title: 'Additional Information',
+      id: "additional-information",
+      title: "Additional Information",
       content: (
         <div>
           <h2>Additional information</h2>
@@ -107,7 +77,7 @@ const ProductTabs = () => {
             <tbody>
               <tr>
                 <th scope="row">Variations</th>
-                <td><p>0.7L, 1L</p></td>
+                <td><p>{productData.additionalInfo?.variations}</p></td>
               </tr>
             </tbody>
           </table>
@@ -116,13 +86,17 @@ const ProductTabs = () => {
     },
   ];
 
+  if (!isClient) {
+    return null;
+  }
+
   return (
     <div className="singleproduct-tabs">
       <ul className="tabs wc-tabs py-md-4" role="tablist">
         {tabs.map((tab) => (
           <li
             key={tab.id}
-            className={activeTab === tab.id ? 'active' : ''}
+            className={activeTab === tab.id ? "active" : ""}
             role="tab"
             aria-controls={`tab-${tab.id}`}
             aria-selected={activeTab === tab.id}
@@ -133,10 +107,11 @@ const ProductTabs = () => {
           </li>
         ))}
       </ul>
+
       {tabs.map((tab) => (
         <div
           key={tab.id}
-          className={`singleproduct-tabs ${activeTab === tab.id ? 'active' : 'hidden'}`}
+          className={`singleproduct-tabs ${activeTab === tab.id ? "active" : "hidden"}`}
           id={`tab-${tab.id}`}
           role="tabpanel"
           aria-labelledby={`tab-title-${tab.id}`}

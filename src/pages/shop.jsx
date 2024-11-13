@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Allpagebanner from "../assets/homepage-images/allpagebanner.jpg";
 import Link from "next/link";
+import { Baseurl } from "../../BaseUrl";
 
 const shop = () => {
   const [products, setProducts] = useState([]);
@@ -12,7 +13,7 @@ const shop = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://192.168.201.158:3000/api/products");
+        const response = await fetch(`${Baseurl}/get-products`);
         const data = await response.json();
         setProducts(data.products);
       } catch (error) {
@@ -46,22 +47,27 @@ const shop = () => {
           <div className="row">
             {products.map((product) => {
               // Extract prices from product_variations
-              const prices = product.product_variations.map(
-                (variation) => variation.price
-              );
+              // const prices = product.product_variations.map(
+              //   (variation) => variation.price
+              // );
 
-              // Calculate minimum and maximum prices
-              const minPrice = Math.min(...prices);
-              const maxPrice = Math.max(...prices);
+              // // Calculate minimum and maximum prices
+              // const minPrice = Math.min(...prices);
+              // const maxPrice = Math.max(...prices);
 
               return (
                 <div key={product.id} className="product col-lg-3 col-sm-6 col-2 mb-3" >
                   <div className="item">
                     <div className="featured-img">
-                      <img
-                        src={chnageimguri(product.featured_image)}
-                        alt={product.name}
+                      {product?.images?.map((e)=>(
+                        <>
+                           <img
+                        src={e?.src}
+                        alt={e?.name}
                       />
+                        </>
+                      ))}
+                   
                     </div>
 
                     <div className="innerproduct">
@@ -73,12 +79,14 @@ const shop = () => {
                     </div>
 
                     <div className="product-pricing">
-                      <p>
+                      {/* <p>
                         PKR{" "}
                         {minPrice === maxPrice
                           ? minPrice
                           : `${minPrice} - PKR ${maxPrice}`}
-                      </p>
+                      </p> */}
+                  <p dangerouslySetInnerHTML={{ __html: product?.price_html }} />
+
                     </div>
 
                     <div className="select-btn-prodpg pb-3">

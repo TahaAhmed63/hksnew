@@ -1,9 +1,13 @@
+"use-client"
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Footer from "@/Components/Footer/footer";
 import Header from "@/Components/Header/header";
 import Allpagebanner from "../../assets/homepage-images/allpagebanner.jpg";
-import ProductTabs from "./productTabs";
+// import ProductTabs from "./productTabs";
+import { Baseurl } from "../../../BaseUrl";
+import dynamic from "next/dynamic";
+const ProductTabs = dynamic(() => import('./productTabs'), { ssr: false })
 
 const ProductPage = ({ product }) => {
   if (!product) {
@@ -11,21 +15,20 @@ const ProductPage = ({ product }) => {
   }
 
   // Define the changeImgUri function
-  const changeimgUri = (url) => {
-    // Modify this function based on your requirements
-    url = url.replace("http://localhost:3000", "http://192.168.201.158:3000");
-    return url;
-    
-  };
+
 
   // Extract prices from product_variations
-  const prices = product.product_variations.map(
-    (variation) => variation.price
-  );
+  const prices = product?.variations
+  ?.map((variation) => variation.price !== '' ? parseFloat(variation.price) : null)
+  .filter(price => price !== null); // Filter out null values
 
-  // Calculate minimum and maximum prices
-  const minPrice = Math.min(...prices);
-  const maxPrice = Math.max(...prices);
+// Calculate minimum and maximum prices
+const minPrice = prices.length > 0 ? Math.min(...prices) : null;
+const maxPrice = prices.length > 0 ? Math.max(...prices) : null;
+
+
+
+
 
   return (
     <>
@@ -41,11 +44,22 @@ const ProductPage = ({ product }) => {
         <div className="row py-md-5">
           <div key={product.id} className="product col-md-6 col-2 mb-3">
             <div className="singpgfeatrued-img">
+              {
+            product?.images?.map((e)=>(
+              <>
+               <img
+                src={e?.src}
+                alt={e?.name}
+              />
+              </>
+            ))
+              }
+{/*               
               <img
                 src={changeimgUri(product.featured_image)}
                 alt={product.name}
               />
-              
+               */}
             </div>
           </div>
 
@@ -55,7 +69,7 @@ const ProductPage = ({ product }) => {
         </div>
 
         <div className="singleproduct-des">
-              <p>{product.description}</p>
+        <p dangerouslySetInnerHTML={{ __html: product?.short_description }}/>
         </div>
 
         <div className="singleproduct-pricing">
@@ -72,7 +86,7 @@ const ProductPage = ({ product }) => {
         </div>
 
         <div className="row py-md-5">
-            <ProductTabs/>
+            <ProductTabs productData={product?.description}/>
         </div>
       </div>
 
@@ -86,7 +100,7 @@ const ProductPage = ({ product }) => {
 };
 
 export async function getStaticPaths() {
-  const res = await fetch("http://192.168.201.158:3000/api/products");
+  const res = await fetch(`${Baseurl}/get-products`);
   const products = await res.json();
 
   const paths =
@@ -98,7 +112,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch("http://192.168.201.158:3000/api/products");
+  const res = await fetch(`${Baseurl}/get-products`);
   const products = await res.json();
 
   const product = products.products.find((p) => p.slug === params.slug);
