@@ -1,70 +1,65 @@
 "use-client";
 import { useState, useEffect } from "react";
 
-const ProductTabs = ({ productData }) => {
+const ProductTabs = ({ productData,additionalinfo }) => {
   const [isClient, setIsClient] = useState(false); // Track client-side rendering
   const [activeTab, setActiveTab] = useState("description");
-  const [parsedDescription, setParsedDescription] = useState(null); // Start with null to avoid hydration issues
-  const [isDataReady, setIsDataReady] = useState(false); // Track if data is ready
+  const [parsedContent, setParsedContent] = useState({}); // Store parsed data as an object
 
   useEffect(() => {
     setIsClient(true); // Ensure client-side rendering
   }, []);
+  function parseDescriptionToObject(description) {
+    console.log(description,"")
+    if (!description) {
+      return {
+        descriptionContent: "",
+        technicalDetails: "",
+      };
+    }
+  
+    // Extract content up to the next <h2> or <table> tag for Description
+    const descriptionContent = description.match(/<h2[^>]*>Description<\/h2>[\s\S]*?(?=<h2|<table)/i)?.[0] || "";
+    
+    // Extract content for the first <table> as Technical Details
+    const technicalDetails = description.match(/<table[\s\S]*?<\/table>/i)?.[0] || "";
+  
+    return {
+      descriptionContent,
+      technicalDetails,
 
+    };
+  }
   useEffect(() => {
     if (productData) {
-      const parsedData = parseDescriptionToObject(productData);
-      setParsedDescription(parsedData);
-      setIsDataReady(true); // Data ready for rendering
+      setParsedContent(parseDescriptionToObject(productData)); // Parse only once
     }
   }, [productData]);
 
-  function parseDescriptionToObject(description) {
-    // Extract content between tags using regular expressions
-    const getTagContent = (tag) => {
-      const regex = new RegExp(`<${tag}[^>]*>(.*?)</${tag}>`, "is");
-      const match = description.match(regex);
-      return match ? match[1].trim() : "";
-    };
+  // Function to parse description HTML and extract the main description and technical details as separate sections
 
-    return {
-      description: getTagContent("h2"),
-      customerBenefits: getTagContent("h3"), // First <h3> tag content
-      preservesPower: getTagContent("h3"), // Second <h3> tag content if needed
-      savesOnMaintenance: getTagContent("h3"), // Third <h3> tag content if needed
-      technicalDetails: getTagContent("table"), // Get entire table as plain content
-    };
-  }
-const mainTable = `<table>${parsedDescription.technicalDetails}</table>`
+
   const tabs = [
     {
       id: "description",
       title: "Description",
-      content: isDataReady && parsedDescription ? (
-        <div className="custom-tab-content">
-          <h3><strong>Customer benefits</strong></h3>
-          <p      dangerouslySetInnerHTML={{ __html: parsedDescription.customerBenefits }} />
-          <h3><strong>Preserves power & performance</strong></h3>
-          <p>{parsedDescription.preservesPower}</p>
-          <h3><strong>Saves on maintenance</strong></h3>
-          <p>{parsedDescription.savesOnMaintenance}</p>
-        </div>
-      ) : (
-        <div>Loading...</div> // Placeholder until data is ready
+      content: (
+        <div
+          className="custom-tab-content"
+          dangerouslySetInnerHTML={{ __html: parsedContent.descriptionContent }}
+        />
       ),
     },
     {
       id: "technical-details",
       title: "Technical Detail",
-      content: isDataReady && parsedDescription ? (
+      content: (
         <div className="technical-details">
-            <div
-      className="technical-details-table"
-      dangerouslySetInnerHTML={{ __html: mainTable }}
-    />
+          <div
+            className="technical-details-table"
+            dangerouslySetInnerHTML={{ __html: parsedContent.technicalDetails }}
+          />
         </div>
-      ) : (
-        <div>Loading...</div> // Placeholder until data is ready
       ),
     },
     {
@@ -76,9 +71,18 @@ const mainTable = `<table>${parsedDescription.technicalDetails}</table>`
           <table className="woocommerce-product-attributes shop_attributes" aria-label="Product Details">
             <tbody>
               <tr>
-                <th scope="row">Variations</th>
-                <td><p>{productData.additionalInfo?.variations}</p></td>
+                { additionalinfo.map((e,i)=>(
+<>
+<th scope="row" key={i}>{e?.name}</th>
+
+<td><p>{e?.options.map((j)=>(j+','))}</p></td>
+
+</>
+                ))
+               
+              }
               </tr>
+              
             </tbody>
           </table>
         </div>

@@ -16,43 +16,47 @@ const api = new WooCommerceRestApi({
  * @param res
  * @return {Promise<void>}
  */
+const cache = {};
+
 export default async function handler(req, res) {
-	const responseData = {
-		success: false,
-		products: []
-	}
+  const { perPage, page } = req?.query ?? {};
 
-	const { perPage } = req?.query ?? {};
+  const cacheKey = `products-${perPage}-${page}`;
+  if (cache[cacheKey]) {
+    return res.json(cache[cacheKey]);
+  }
 
-	try {
-		// Fetch main product data
-		const { data: products } = await api.get(
-			'products',
-			{
-				per_page: perPage || 50
-			}
-		);
+  // Fetch data from the API if not in cache
+  const responseData = {
+    success: false,
+    products: []
+  };
 
-		// For each product, fetch its variations (if it's a variable product)
-		const productsWithVariations = await Promise.all(products.map(async (product) => {
-			if (product.type === 'variable') {
-				try {
-					const { data: variations } = await api.get(`products/${product.id}/variations`);
-					return { ...product, variations };
-				} catch (error) {
-					console.error(`Error fetching variations for product ${product.id}:`, error.message);
-					return product; // Return product without variations if there's an error
-				}
-			}
-			return product; // Return simple products directly
-		}));
+  try {
+    const { data: products } = await api.get('products', {
+      per_page: perPage || 50,
+      page: page || 1,
+      _fields: 'id,name,price,images,price_html,status,slug'
+    });
 
-		responseData.success = true;
-		responseData.products = productsWithVariations;
+    const productsWithVariations = await Promise.all(products.map(async (product) => {
+      if (product.type === 'variable') {
+        const { data: variations } = await api.get(`products/${product.id}/variations`);
+        return { ...product, variations };
+      }
+      return product;
+    }));
 
-		res.json(responseData);
-	} catch (error) {
-		responseData.error = error.message;
-		res.status(500).json(responseData);
-	}
+    responseData.success = true;
+    responseData.products = productsWithVariations;
+
+    // Cache the response
+    cache[cacheKey] = responseData;
+
+    res.json(responseData);
+  } catch (error) {
+    responseData.error = error.message;
+    res.status(500).json(responseData);
+  }
 }
+
