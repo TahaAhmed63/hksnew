@@ -3,7 +3,6 @@ import Image from "next/image";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Bannerone from "../../assets/homepage-images/banner.jpg";
-import Bannertwo from "../../assets/homepage-images/bannertwo.jpg";
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -19,28 +18,21 @@ const slides = [
   {
     src: Bannerone,
     alt: "Banner One",
+    descriptions1: [
+      "Leading Innovation in High-Performance ",
+      "Lubricants and Greases."
+    ],
     headings: [
       "Expertly Crafted",
       "Lubricants For",
-      "Every need"
+      "Every Need"
     ],
-    descriptions: [
-      "Leading Innovation in High-Performance ",
-      "Lubricants and Greases."
-    ]
-  },
-  {
-    src: Bannertwo,
-    alt: "Banner Two",
-    headings: [
-      "Quality You Can Trust"
-    ],
-    descriptions: [
-      "Delivering the best solutions for your lubrication needs.",
-      "Our products are engineered for excellence."
+    descriptions2: [
+      "HKS GLOBAL PETROLEUM is a pioneer in lubricants ",
+      "and grease manufacturing a company registered with SECP",
+      "(Securities and Exchange Commission of Pakistan)."
     ]
   }
-  // Add more slides as needed
 ];
 
 export default function App() {
@@ -53,7 +45,7 @@ export default function App() {
   return (
     <>
       <Swiper
-        navigation={true}
+        navigation={false}
         modules={[Navigation]}
         className="mySwiper"
         onSlideChange={handleSlideChange} // Trigger on slide change
@@ -61,37 +53,110 @@ export default function App() {
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
             <Image src={slide.src} alt={slide.alt} />
-            <div className="container swiper-content">
-              <p className="py-md-4">
-                {slide.descriptions.map((descrip, i) => (
-                  <span key={i}>
-                    {descrip}
-                    {i < slide.descriptions.length - 1 && <br />}
-                  </span>
-                ))}
-              </p>
 
-              {/* Motion H1 with Slide Change Animation */}
-              <motion.h1
-                key={key} // Force remount on key change to trigger animation
-                className="m-0"
-                initial={{ opacity: 0, x: -100 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{
-                  duration: 2,  // Slower animation duration
-                  delay: 1, 
-                  type: 'spring',
-                  stiffness: 100,
-                  damping: 25,
-                }}
-              >
-                {slide.headings.map((heading, i) => (
-                  <span key={i}>
-                    {heading}
-                    {i < slide.headings.length - 1 && <br />}
-                  </span>
+            <div className="container swiper-content">
+
+              {/* Description one Animation */}
+                  <motion.p
+                    className="pb-md-4 p-0"
+                    initial={{ opacity: 0, y: -20 }}  // Start from above and invisible
+                    animate={{ opacity: 1, y: 0 }}    // End at normal position and fully visible
+                    transition={{ duration: 2 }}      // Slow transition for the entire paragraph
+                  >
+                    {slide.descriptions1.map((descrip, i) => (
+                      <motion.span
+                        key={i}
+                        initial={{ opacity: 0, y: -20 }}   // Each description starts from above and invisible
+                        animate={{ opacity: 1, y: 0 }}     // Each description moves to its normal position
+                        transition={{
+                          duration: 0.8,                   // Slow animation per description
+                          delay: i * 0.3,                  // Stagger delay for each description
+                        }}
+                      >
+                        {descrip}
+                        {i < slide.descriptions1.length - 1 && <br />}
+                      </motion.span>
+                    ))}
+                  </motion.p>
+
+              {/* Heading Animation */}
+                  <motion.h1
+                  key={key} // Ensure remount on key change
+                  className="m-0"
+                  initial={{ opacity: 0, x: -100 }}  // Start from the left
+                  animate={{ opacity: 1, x: 0 }}     // Animate to normal position
+                  transition={{
+                    duration: 2,  // Slower animation for the heading
+                    delay: 2.5,     // Delay the heading to start after the paragraph animation
+                    type: 'spring',
+                    stiffness: 100,
+                    damping: 25,
+                  }}
+                >
+                  {slide.headings.map((heading, i) => (
+                    <span key={i}>
+                      {heading}
+                      {i < slide.headings.length - 1 && <br />}
+                    </span>
+                  ))}
+                  </motion.h1>
+
+              {/* Paragraph 2 Animation (descriptions2) - Bottom to Top */}
+                 <motion.p
+                    className="py-md-4 p-0"
+                    initial={{ opacity: 0, y: 20 }}  // Start from below
+                    animate={{ opacity: 1, y: 0 }}    // Move to normal position
+                    transition={{
+                      duration: 2,  // Duration of the animation
+                      delay: 3.5,     // Delay this to start after the heading finishes
+                    }}
+                 >
+                {slide.descriptions2.map((descrip, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}  // Start from below
+                    animate={{ opacity: 1, y: 0 }}    // Animate to normal position
+                    transition={{
+                      duration: 0.8,
+                      delay: i * 0.3,                 // Staggered animation for each description
+                    }}
+                  >
+                    {descrip}
+                    {i < slide.descriptions2.length - 1 && <br />}
+                  </motion.span>
                 ))}
-              </motion.h1>
+                 </motion.p>
+
+                <div className="slider-cta ">
+
+                  {/* Button Animation - Bottom to Top  Explore button*/}
+                    <motion.button
+                      initial={{ opacity: 0, y: 20 }}  // Start from below
+                      animate={{ opacity: 1, y: 0 }}    // Move to normal position
+                      transition={{
+                        duration: 2,  // Duration of the button's animation
+                        delay: 5,     // Delay the button animation to start after all previous animations finish
+                      }}
+                    >
+                      <a href="https://staging.hksglobalpetroleum.com/about-us/">Explore Now</a>
+                    </motion.button>
+
+
+                   {/* Button Animation - Bottom to Top Our product */}
+                      <motion.button
+                        initial={{ opacity: 0, y: 20 }}  // Start from below
+                        animate={{ opacity: 1, y: 0 }}    // Move to normal position
+                        transition={{
+                          duration: 2,  // Duration of the button's animation
+                          delay: 6.5,     // Delay the button animation to start after all previous animations finish
+                        }}
+                      >
+                        <a href="https://staging.hksglobalpetroleum.com/about-us/">Our product</a>
+                      </motion.button>
+                 
+
+                  </div>
+
             </div>
           </SwiperSlide>
         ))}

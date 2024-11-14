@@ -1,0 +1,26 @@
+import React from 'react'
+
+const slidingmenu = () => {
+  return (
+    <nav>
+	<div class="menu-btn">
+		<div class="line line--1"></div>
+		<div class="line line--2"></div>
+		<div class="line line--3"></div>
+	</div>
+
+	<div class="nav-links">
+		<a href="" class="link">Home</a>
+		<a href="" class="link">Contact</a>
+		<a href="" class="link">Profile</a>
+		<a href="" class="link">About</a>
+	</div>
+</nav>
+
+
+
+
+  )
+}
+
+export default slidingmenu

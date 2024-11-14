@@ -3,33 +3,52 @@ import Image from "next/image";
 import Footer from "@/Components/Footer/footer";
 import Header from "@/Components/Header/header";
 import Allpagebanner from "../../assets/homepage-images/allpagebanner.jpg";
-import ProductTabs from "./productTabs";
+// import ProductTabs from "./productTabs";
+import { Baseurl } from "../../../BaseUrl";
+import dynamic from "next/dynamic";
+import { useState } from "react";
 
+const ProductTabs = dynamic(() => import("./productTabs"), { ssr: false });
 const ProductPage = ({ product }) => {
-  if (!product) {
+  const [selectedVariation, setSelectedVariation] = useState(null);
+
+  const singleProduct = product?.product
+  if (!singleProduct) {
     return <div>Loading...</div>;
   }
+  const handleVariationChange = (event) => {
+    const selectedOption = event.target.value;
+    if (selectedOption === '') {
+      // If the user selects the placeholder, set the state to null
+      setSelectedVariation(null);
+    }else{
 
-  // Define the changeImgUri function
-  const changeimgUri = (url) => {
-    // Modify this function based on your requirements
-    url = url.replace("http://localhost:3000", "http://192.168.201.158:3000");
-    return url;
-    
+      const selectedVar = singleProduct?.variations.find(
+        (variation) => variation?.name === selectedOption
+      );
+      setSelectedVariation(selectedVar);
+    }
+ 
   };
 
-  // Extract prices from product_variations
-  const prices = product.product_variations.map(
-    (variation) => variation.price
-  );
+  // Define the changeImgUri function
 
-  // Calculate minimum and maximum prices
-  const minPrice = Math.min(...prices);
-  const maxPrice = Math.max(...prices);
+
+  // Extract prices from product_variations
+  const prices = singleProduct?.variations
+  ?.map((variation) => variation.price !== '' ? parseFloat(variation.price) : null)
+  .filter(price => price !== null); // Filter out null values
+
+// Calculate minimum and maximum prices
+const minPrice = prices.length > 0 ? Math.min(...prices) : null;
+const maxPrice = prices.length > 0 ? Math.max(...prices) : null;
+
+
+console.log(selectedVariation,"selectedVariation")
 
   return (
     <>
-      <Header />
+   
       <div className="singpgbanner">
         <Image src={Allpagebanner} alt="Banner" />
         <div className="singpg-title text-center">
@@ -39,40 +58,66 @@ const ProductPage = ({ product }) => {
 
       <div className="container ">
         <div className="row py-md-5">
-          <div key={product.id} className="product col-md-6 col-2 mb-3">
+          <div key={singleProduct.id} className="product col-md-6 col-2 mb-3">
             <div className="singpgfeatrued-img">
+            {
+  selectedVariation === null  || undefined
+    ? singleProduct?.images?.map((e, i) => (
+        <img key={i} src={e?.src} alt={e?.name} />
+      ))
+    : selectedVariation?.image?.src && (
+        <img src={selectedVariation.image.src} alt={selectedVariation?.image?.name} />
+      )
+}
+
+{/*               
               <img
                 src={changeimgUri(product.featured_image)}
                 alt={product.name}
               />
-              
+               */}
             </div>
           </div>
 
       <div className="col-md-6 singprod-content-col">
         <div className="singleproduct-title">
-              <h2>{product.name}</h2>
+              <h2>{singleProduct.name}</h2>
         </div>
 
         <div className="singleproduct-des">
-              <p>{product.description}</p>
+        <p dangerouslySetInnerHTML={{ __html: singleProduct?.short_description }}/>
         </div>
 
-        <div className="singleproduct-pricing">
+    
+                    <div className="variation-select d-flex gap-2 py-2 align-items-center pb-4">
+              <label >{singleProduct?.attributes[0]?.name}</label>
+              <select id="variations" onChange={handleVariationChange} className="form-control">
+                <option value="" >Choose an option</option>
+                {singleProduct?.variations?.map((option, i) => (
+  option?.price !== '' ? (
+    <option key={i} value={option.name}>
+      {option.name}
+    </option>
+  ) : null
+))}
+
+              </select>
+            </div>
+            <div className="singleproduct-pricing">
                       <h2>
-                        PKR{" "}
+                        {/* PKR{" "}
                         {minPrice === maxPrice
                           ? minPrice
-                          : `${minPrice} - PKR ${maxPrice}`}
+                          : `${minPrice} - PKR ${maxPrice}`} */}
+                          { selectedVariation && `RS ` + selectedVariation?.price}
                       </h2>
                     </div>
-      
       </div>
 
         </div>
 
         <div className="row py-md-5">
-            <ProductTabs/>
+            <ProductTabs productData={singleProduct?.description} additionalinfo={singleProduct?.attributes}/>
         </div>
       </div>
 
@@ -80,13 +125,13 @@ const ProductPage = ({ product }) => {
       <p>{product.description}</p>
       <p>Price: ${product.lprice}</p> */}
 
-      <Footer />
+
     </>
   );
 };
 
 export async function getStaticPaths() {
-  const res = await fetch("http://192.168.201.158:3000/api/products");
+  const res = await fetch(`${Baseurl}/get-products`);
   const products = await res.json();
 
   const paths =
@@ -94,14 +139,12 @@ export async function getStaticPaths() {
       params: { slug: product.slug },
     })) || [];
 
-  return { paths, fallback: true }; // or 'blocking'
+  return { paths, fallback: true };
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch("http://192.168.201.158:3000/api/products");
-  const products = await res.json();
-
-  const product = products.products.find((p) => p.slug === params.slug);
+  const res = await fetch(`${Baseurl}/get-product-by-slug?slug=${params.slug}`);
+  const product = await res.json();
 
   if (!product) {
     return {
