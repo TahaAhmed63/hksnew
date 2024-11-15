@@ -8,14 +8,28 @@ import { Baseurl } from "../../../BaseUrl";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import RelatedSlider from "@/Components/RelatedproductSlider/RelatedSlider";
+import { useDispatch } from "react-redux";
+import { addItem } from "@/store/slice/cartslice";
 const ProductTabs = dynamic(() => import("./productTabs"), { ssr: false });
 const ProductPage = ({ product }) => {
   const [selectedVariation, setSelectedVariation] = useState(null);
+  const dispatch = useDispatch();
 
+  const [quantity, setQuantity] = useState(1);  
   const singleProduct = product?.product;
   if (!singleProduct) {
     return <div>Loading...</div>;
   }
+  const handleAddToCart = () => {
+    const item = {
+      id: singleProduct.id,
+      variationId: selectedVariation?.id,
+      price: selectedVariation ? selectedVariation.price : singleProduct.price,
+      quantity,
+      img:selectedVariation? selectedVariation?.image : singleProduct?.images
+    };
+    dispatch(addItem(item));
+  };
   const handleVariationChange = (event) => {
     const selectedOption = event.target.value;
     if (selectedOption === "") {
@@ -41,7 +55,13 @@ const ProductPage = ({ product }) => {
   // Calculate minimum and maximum prices
   const minPrice = prices.length > 0 ? Math.min(...prices) : null;
   const maxPrice = prices.length > 0 ? Math.max(...prices) : null;
+  const handleIncrement = () => {
+    setQuantity(prevQuantity => prevQuantity + 1);
+  };
 
+  const handleDecrement = () => {
+    if (quantity > 1) setQuantity(prevQuantity => prevQuantity - 1);
+  };
   console.log(selectedVariation, "selectedVariation");
 
   return (
@@ -115,6 +135,19 @@ const ProductPage = ({ product }) => {
                           : `${minPrice} - PKR ${maxPrice}`} */}
                 {selectedVariation && `RS ` + selectedVariation?.price}
               </h2>
+            </div>
+            <div className="quantity-controls d-flex align-items-center gap-2">
+              <button onClick={handleDecrement} className="btn btn-warning">-</button>
+              <input
+                type="number"
+                value={quantity}
+                onChange={(e) => setQuantity(Number(e.target.value))}
+                className="form-control text-center"
+                style={{ width: "50px" }}
+                min="1"
+              />
+              <button onClick={handleIncrement} className="btn btn-warning">+</button>
+              <button className="btn btn-warning" onClick={handleAddToCart} >Add to basket</button>
             </div>
           </div>
         </div>

@@ -6,10 +6,13 @@ import menuItems from "../../Components/Header/Menu/menuItems";
 import Menu from "./Menu/Menu";
 import { FaBasketShopping, FaBars } from "react-icons/fa6"; // Import FaBars for the hamburger icon
 import SlidingMenu from "./Menu/SlidingMenu";
+import { useDispatch } from "react-redux";
+import { toggleCart } from "@/store/slice/cartslice";
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false); // State to control the menu toggle
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,7 +66,7 @@ const Header = () => {
               <div className="col-md-1  mt-auto mb-auto p-0">
                 <div className="cart-container">
                   <button
-                    onClick={() => openNav()}
+              onClick={() => dispatch(toggleCart())}
                     className="bucket-icon openbtn"
                   >
                     <FaBasketShopping />

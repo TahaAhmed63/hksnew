@@ -5,6 +5,7 @@ import Home from "@/Components/Home/home-banner.jsx";
 import Footer from "@/Components/Footer/footer";
 import { Provider } from "react-redux";
 import store from "@/store/store";
+import MiniCart from "@/Components/mincart/MiniCart";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -12,7 +13,9 @@ export default function App({ Component, pageProps }) {
       <Provider store={store}>
         <Header />
         <Component {...pageProps} suppressHydrationWarning={true} />
+
         <Footer />
+        <MiniCart />
       </Provider>
     </div>
   );

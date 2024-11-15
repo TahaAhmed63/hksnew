@@ -1317,11 +1317,9 @@ margin-top: 40px;
 
 /*  maplic */
 
-svg{
+svg {
     margin: auto;
     display: flex;
-    width: 100%;
-    max-width: 100%;
 }
 
 .maplic-sec svg {
@@ -1755,3 +1753,281 @@ display:none;
   .sliding-menu ul li {
     margin: 15px 0;
   }
+  
+  /* MiniCart.css */
+.mini-cart {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 300px;
+    background-color: white;
+    border-left: 1px solid #ddd;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 20px;
+  }
+  
+  .mini-cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .mini-cart-items {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .mini-cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .mini-cart-img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+  
+  .mini-cart-details {
+    flex-grow: 1;
+  }
+  
+  .mini-cart-quantity {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .remove-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: red;
+    cursor: pointer;
+  }
+  
+  .mini-cart-footer {
+    margin-top: 20px;
+  }
+  
+  .subtotal {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .view-basket-btn,
+  .checkout-btn {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: orange;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  /* Tailwind CSS styles for the cart component */
+
+/* Overlay that darkens the background when the cart is open */
+.fixed.inset-0.bg-black\/20 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 40;
+  }
+  
+  /* Main cart container styling */
+  .fixed.top-0.right-0.h-full.w-\[400px\].bg-white.shadow-xl.z-50.transform.transition-transform.duration-300.ease-in-out.translate-x-0{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 400px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    transform: translateX(0%);
+    transition: transform 0.3s ease-in-out;
+  }
+  .fixed.top-0.right-0.h-full.w-\[400px\].bg-white.shadow-xl.z-50.transform.transition-transform.duration-300.ease-in-out.translate-x-full{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 400px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    transform: translateX(0%);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* When the cart is open, slide it into view */
+  .translate-x-0 {
+    transform: translateX(0);
+  }
+  
+  /* Close button styling */
+  .h-\[calc\(100vh-200px\)\] {
+    height: calc(100vh - 200px);
+}
+
+
+  
+  .ml-auto.text-2xl.text-gray-400.hover\:text-gray-500:hover {
+    color: rgba(75, 85, 99, 1);
+  }
+  
+  /* Shopping Basket title styling */
+  .text-lg.font-medium.text-orange-500 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: rgba(249, 115, 22, 1);
+  }
+  
+  /* Cart item container */
+  .p-4.border-b {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(229, 231, 235, 1);
+  }
+  
+  /* Product details layout */
+  .flex.items-center.gap-4 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  /* Product image styling */
+  .rounded-lg.object-cover {
+    border-radius: 0.375rem;
+    object-fit: cover;
+  }
+  .items-center {
+    align-items: center;
+}
+.text-orange-500 {
+    --tw-text-opacity: 1;
+    color: rgb(249 115 22 / var(--tw-text-opacity));
+}
+
+.font-medium {
+    font-weight: 500;
+}
+.text-gray-400 {
+    --tw-text-opacity: 1;
+    color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
+
+.text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+.text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+  /* Product name truncation and styling */
+  .text-sm.font-medium.truncate {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  /* Quantity controls styling */
+  .flex.items-center.gap-2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .flex.h-6.w-6.items-center.justify-center.rounded.border.text-sm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(209, 213, 219, 1);
+    font-size: 0.875rem;
+  }
+  
+  /* Quantity text */
+  .w-8.text-center {
+    width: 2rem;
+    text-align: center;
+  }
+  
+  /* Price styling */
+  .text-right {
+    text-align: right;
+  }
+  
+  .font-medium {
+    font-weight: 500;
+  }
+  
+  /* Subtotal section */
+  .absolute.bottom-0.left-0.right-0.border-t.bg-white {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid rgba(229, 231, 235, 1);
+    background-color: white;
+  }
+  
+  /* Subtotal and button container padding */
+  .p-4 {
+    padding: 1rem;
+  }
+  
+  /* Total row */
+  .flex.items-center.justify-between.border-b.border-dashed.pb-4.mb-4 {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed rgba(229, 231, 235, 1);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Link button styling */
+  .block.w-full.rounded.bg-orange-500.px-4.py-2.text-center.text-white.hover\:bg-orange-600 {
+    display: block;
+    width: 100%;
+    border-radius: 0.375rem;
+    background-color: rgba(249, 115, 22, 1);
+    padding: 0.5rem 1rem;
+    text-align: center;
+    color: white;
+    transition: background-color 0.2s;
+  }
+  
+  .block.w-full.rounded.bg-orange-500.px-4.py-2.text-center.text-white.hover\:bg-orange-600:hover {
+    background-color: rgba(234, 88, 12, 1);
+  }
+  

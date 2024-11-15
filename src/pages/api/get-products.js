@@ -36,7 +36,7 @@ export default async function handler(req, res) {
     const { data: products } = await api.get("products", {
       per_page: perPage || 50,
       page: page || 1,
-      _fields: "id,name,price,images,price_html,status,slug,short_description",
+      _fields: "id,name,price,images,price_html,status,slug,short_description,stock",
     });
 
     const productsWithVariations = await Promise.all(
