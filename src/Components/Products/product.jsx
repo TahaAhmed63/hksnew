@@ -9,42 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductData } from "@/store/slice/productslice";
 import Link from "next/link";
 
-const products = [
-  {
-    id: 1,
-    image: require("../../assets/homepage-images/s8.jpg"),
-    title: "S8 SN 5W40",
-    description: "Lorem ipsum dolor sit amet.",
-    buyLink: "/",
-    readMoreLink: "/",
-  },
-  {
-    id: 2,
-    image: require("../../assets/homepage-images/Featured-image-psd-2.jpg"),
-    title: "S8 SN 5W40",
-    description: "Lorem ipsum dolor sit amet.",
-    buyLink: "/",
-    readMoreLink: "/",
-  },
-  {
-    id: 3,
-    image: require("../../assets/homepage-images/Featured-image-gray.jpg"),
-    title: "S5 CH4 20W50",
-    description: "Lorem ipsum dolor sit amet.",
-    buyLink: "/",
-    readMoreLink: "/",
-  },
-
-  {
-    id: 4,
-    image: require("../../assets/homepage-images/Featured-image-psd-4.jpg"),
-    title: "S8 SN 5W40",
-    description: "Lorem ipsum dolor sit amet.",
-    buyLink: "/",
-    readMoreLink: "/",
-  },
-];
-
 const Product = () => {
   const dispatch = useDispatch();
 
@@ -53,7 +17,7 @@ const Product = () => {
   }, [dispatch]);
   const productData = useSelector((state) => state?.products?.data?.products);
   console.log(productData);
-  const publishedProducts = productData.filter(
+  const publishedProducts = productData?.filter(
     (product) => product.status !== "draft"
   );
   return (

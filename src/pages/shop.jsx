@@ -5,8 +5,8 @@ import Link from "next/link";
 import { Baseurl } from "../../BaseUrl";
 
 const Shop = ({ products }) => {
-  const publishedProducts = products.filter(
-    (product) => product.status !== "draft"
+  const publishedProducts = products?.filter(
+    (product) => product?.status !== "draft"
   );
 
   return (

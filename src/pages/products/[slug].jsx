@@ -1,7 +1,5 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
-import Footer from "@/Components/Footer/footer";
-import Header from "@/Components/Header/header";
 import Allpagebanner from "../../assets/homepage-images/allpagebanner.jpg";
 // import ProductTabs from "./productTabs";
 import { Baseurl } from "../../../BaseUrl";
@@ -11,11 +9,11 @@ import RelatedSlider from "@/Components/RelatedproductSlider/RelatedSlider";
 const ProductTabs = dynamic(() => import("./productTabs"), { ssr: false });
 const ProductPage = ({ product }) => {
   const [selectedVariation, setSelectedVariation] = useState(null);
-
   const singleProduct = product?.product;
   if (!singleProduct) {
     return <div>Loading...</div>;
   }
+
   const handleVariationChange = (event) => {
     const selectedOption = event.target.value;
     if (selectedOption === "") {
@@ -130,7 +128,7 @@ const ProductPage = ({ product }) => {
       {/* <h1>{product.name}</h1>
       <p>{product.description}</p>
       <p>Price: ${product.lprice}</p> */}
-      <RelatedSlider />
+      <RelatedSlider productId={singleProduct?.id} />
     </>
   );
 };
