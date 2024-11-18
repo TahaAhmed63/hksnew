@@ -1,3 +1,5 @@
+"use-client"
+
 import Image from 'next/image'
 import React from 'react'
 import Settingimg from '../../assets/homepage-images/group-3.png'

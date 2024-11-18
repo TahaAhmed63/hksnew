@@ -16,7 +16,7 @@ const Product = dynamic(() => import("@/Components/Products/product.jsx"), {
 const  Homepage = () => {
   return (
     <>
-      <Home />
+      <Home  suppressHydrationWarning />
       <BriefProfile />
       <Blendingplant/>
       <Product/>

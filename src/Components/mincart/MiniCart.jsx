@@ -2,9 +2,9 @@
 
 import { useSelector, useDispatch } from "react-redux";
 import { toggleCart, removeItem, incrementQuantity, decrementQuantity } from "../../store/slice/cartslice";
-import Image from "next/image";
-import Link from "next/link";
 import { ShoppingBag } from 'lucide-react';
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Component() {
   const dispatch = useDispatch();
@@ -31,6 +31,20 @@ export default function Component() {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
+  // Hydration state to track whether component has mounted on the client
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // This effect will trigger when the component is mounted on the client-side
+  useEffect(() => {
+    setIsHydrated(true); // After the component mounts, set isHydrated to true
+  }, []);
+
+  // If not hydrated, return a loading state or nothing
+  if (!isHydrated) {
+    return <div>Loading...</div>;
+  }
+
+  // If the cart is not open, return null (no cart shown)
   if (!isOpen) return null;
 
   return (
@@ -45,18 +59,18 @@ export default function Component() {
           <span className="text-lg font-medium text-orange-500">Shopping Basket</span>
           <button 
             onClick={handleClose}
-            className="ml-auto text-2xl text-gray-400 hover:text-gray-500  bg-white"
+            className="ml-auto text-2xl text-gray-400 hover:text-gray-500 bg-white"
             aria-label="Close cart"
           >
             ×
           </button>
         </div>
-        
+
         <div className="flex flex-col h-[calc(100vh-200px)] overflow-auto cart-body">
           {cartItems.map((item) => (
             <div key={`${item.id}-${item.variationId}`} className="p-4 border-b">
               <div className="flex items-center gap-4">
-              <button
+                <button
                   onClick={() => handleRemoveItem(item.id, item.variationId)}
                   className="text-2xl p-0 border-0 b-0 bg-white text-gray-400 hover:text-gray-500"
                   aria-label="Remove item"
@@ -91,7 +105,6 @@ export default function Component() {
                 <div className="text-right">
                   <span className="font-medium">Rs {item.price * item.quantity}.00</span>
                 </div>
-              
               </div>
             </div>
           ))}

@@ -1,8 +1,10 @@
+"use-client"
+
 import React from 'react'
 
 const slidingmenu = () => {
   return (
-    <nav>
+	<nav>
 	<div class="menu-btn">
 		<div class="line line--1"></div>
 		<div class="line line--2"></div>

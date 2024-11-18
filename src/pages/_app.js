@@ -31,7 +31,7 @@ export default function App({ Component, pageProps }) {
         <Component {...pageProps}  suppressHydrationWarning={true} />
       )}
         <Footer />
-        <MiniCart />
+        <MiniCart  suppressHydrationWarning ={true}/>
    
     </Provider>
   );

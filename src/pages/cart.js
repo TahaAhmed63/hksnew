@@ -5,7 +5,7 @@ import { Table, Button, Form, Container, Row, Col } from "react-bootstrap";
 import Allpagebanner from "../assets/homepage-images/allpagebanner.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleCart, removeItem, incrementQuantity, decrementQuantity } from "./../store/slice/cartslice";
-
+import SinglePageHeader from "@/Components/singlepageheader/SinglePageHeader";
 const cart = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.items);
@@ -33,13 +33,8 @@ const cart = () => {
   
   return (
     <>
-        <div className="singpgbanner">
-        <Image src={Allpagebanner} />
-        <div className="singpg-title text-center">
-          <h1>Shop</h1>
-        </div>
-      </div>
-    <Container className="my-5">
+      <SinglePageHeader  title={"cart page"} pagebanner={Allpagebanner}  />
+    <Container className="my-5"  >
     <Row>
       <Col>
        <Table striped bordered hover responsive className="mt-4">

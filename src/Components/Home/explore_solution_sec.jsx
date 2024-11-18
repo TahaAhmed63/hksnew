@@ -1,3 +1,5 @@
+"use-client"
+
 import React from 'react'
 
 const explore_solution_sec = () => {
