@@ -1,3 +1,4 @@
+"use-client"
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Footer from "@/Components/Footer/footer";
@@ -7,9 +8,10 @@ import Allpagebanner from "../../assets/homepage-images/allpagebanner.jpg";
 import { Baseurl } from "../../../BaseUrl";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import RelatedSlider from "@/Components/RelatedproductSlider/RelatedSlider";
+// import RelatedSlider from "@/Components/RelatedproductSlider/RelatedSlider";
 import { useDispatch } from "react-redux";
-import { addItem } from "@/store/slice/cartslice";
+import { addItem, toggleCart } from "@/store/slice/cartslice";
+const  RelatedSlider=dynamic(() => import('./../../Components/RelatedproductSlider/RelatedSlider'), { ssr: false });
 const ProductTabs = dynamic(() => import("./productTabs"), { ssr: false });
 const ProductPage = ({ product }) => {
   const [selectedVariation, setSelectedVariation] = useState(null);
@@ -23,12 +25,14 @@ const ProductPage = ({ product }) => {
   const handleAddToCart = () => {
     const item = {
       id: singleProduct.id,
+      name: singleProduct?.name + selectedVariation?.name || singleProduct?.name,
       variationId: selectedVariation?.id,
       price: selectedVariation ? selectedVariation.price : singleProduct.price,
       quantity,
-      img:selectedVariation? selectedVariation?.image : singleProduct?.images
+      img:selectedVariation? selectedVariation?.image : singleProduct?.images.map((e)=>(e?.src))
     };
     dispatch(addItem(item));
+dispatch(toggleCart())
   };
   const handleVariationChange = (event) => {
     const selectedOption = event.target.value;
@@ -109,24 +113,29 @@ const ProductPage = ({ product }) => {
                 }}
               />
             </div>
-
-            <div className="variation-select d-flex gap-2 py-2 align-items-center pb-4">
-              <label>{singleProduct?.attributes[0]?.name}</label>
-              <select
-                id="variations"
-                onChange={handleVariationChange}
-                className="form-control"
-              >
-                <option value="">Choose an option</option>
-                {singleProduct?.variations?.map((option, i) =>
-                  option?.price !== "" ? (
-                    <option key={i} value={option.name}>
-                      {option.name}
-                    </option>
-                  ) : null
-                )}
-              </select>
-            </div>
+{ singleProduct?.type === "variable" &&
+    <div className="variation-select d-flex gap-2 py-2 align-items-center pb-4">
+    <label>{singleProduct?.attributes[0]?.name}</label>
+    <select
+      id="variations"
+      onChange={handleVariationChange}
+      className="form-control"
+    >
+      <option value="">Choose an option</option>
+      {singleProduct?.variations?.map((option, i) =>
+        option?.price !== "" ? (
+          <option key={i} value={option.name}>
+            {option.name}
+          </option>
+        ) : null
+      )}
+    </select>
+  </div>
+}
+{singleProduct?.type === "simple" && 
+<h6 className="stock-text">{singleProduct?.stock_quantity  +" "+ singleProduct?.stock_status }</h6>
+}
+        
             <div className="singleproduct-pricing">
               <h2>
                 {/* PKR{" "}
@@ -147,7 +156,13 @@ const ProductPage = ({ product }) => {
                 min="1"
               />
               <button onClick={handleIncrement} className="btn btn-warning">+</button>
-              <button className="btn btn-warning" onClick={handleAddToCart} >Add to basket</button>
+              <button 
+  className="btn btn-warning" 
+  onClick={handleAddToCart} 
+  disabled={singleProduct?.type === "variable"  && selectedVariation === null} // Disable the button when the condition is true
+>
+  Add to basket
+</button>
             </div>
           </div>
         </div>
@@ -163,7 +178,7 @@ const ProductPage = ({ product }) => {
       {/* <h1>{product.name}</h1>
       <p>{product.description}</p>
       <p>Price: ${product.lprice}</p> */}
-      <RelatedSlider />
+     <RelatedSlider productId={singleProduct?.id} />
     </>
   );
 };

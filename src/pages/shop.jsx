@@ -1,14 +1,33 @@
+"use-client"
 import Image from "next/image";
 import React from "react";
 import Allpagebanner from "../assets/homepage-images/allpagebanner.jpg";
 import Link from "next/link";
 import { Baseurl } from "../../BaseUrl";
+import { addItem, toggleCart } from "@/store/slice/cartslice";
+import { useDispatch } from "react-redux";
 
 const Shop = ({ products }) => {
-  const publishedProducts = products.filter(
-    (product) => product.status !== "draft"
-  );
+  const dispatch = useDispatch();
 
+  const publishedProducts = products?.filter(
+    (product) => product?.status !== "draft"
+  );
+  const handleAddToCart = (product) => {
+    const item = {
+      id: product.id,
+      // variationId: selectedVariation?.id,
+      price: product.price,
+      name: product?.name,
+
+      quantity:1,
+      img:product.images.map((e)=>(e?.src))
+    };
+    console.log(product)
+    dispatch(addItem(item));
+dispatch(toggleCart())
+  };
+  console.log(publishedProducts,"publishedProducts")
   return (
     <>
       <div className="singpgbanner">
@@ -35,7 +54,7 @@ const Shop = ({ products }) => {
 
                   <div className="innerproduct">
                     <h2>
-                      <Link href={`/product/${product.id}`}>
+                      <Link href={`/products/${product.slug}`}>
                         {product.name}
                       </Link>
                     </h2>
@@ -47,11 +66,16 @@ const Shop = ({ products }) => {
                     />
                   </div>
 
-                  <div className="select-btn-prodpg pb-3">
+                {product?.type != "simple"  ?
+                
+                (<div className="select-btn-prodpg pb-3">
                     <Link href={`/products/${product.slug}`}>
                       <button>Select Option</button>
                     </Link>
-                  </div>
+                  </div>):(
+              <button className="btn btn-warning w-100 mb-3 rounded-0" onClick={(e)=>handleAddToCart(product)} >Add to basket</button>
+
+                  )}
                 </div>
               </div>
             ))}
@@ -70,7 +94,7 @@ export async function getStaticProps() {
     props: {
       products: data.products,
     },
-    revalidate: 10, // Revalidate data every 10 seconds
+    // revalidate: 10, // Revalidate data every 10 seconds
   };
 }
 

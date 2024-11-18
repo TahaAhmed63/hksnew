@@ -1,35 +1,37 @@
-'use client'
+'use client';
 
-import { useSelector, useDispatch } from "react-redux"
-import { toggleCart, removeItem, incrementQuantity, decrementQuantity } from "./../../store/slice/cartslice"
-import Image from "next/image"
-import Link from "next/link"
-import { ShoppingBag } from 'lucide-react'
+import { useSelector, useDispatch } from "react-redux";
+import { toggleCart, removeItem, incrementQuantity, decrementQuantity } from "../../store/slice/cartslice";
+import Image from "next/image";
+import Link from "next/link";
+import { ShoppingBag } from 'lucide-react';
 
 export default function Component() {
-  const dispatch = useDispatch()
-  const cartItems = useSelector((state) => state.cart.items)
-  const isOpen = useSelector((state) => state.cart.isOpen)
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const isOpen = useSelector((state) => state.cart.isOpen);
 
   const handleClose = () => {
-    dispatch(toggleCart(false))
-  }
+    dispatch(toggleCart(false));
+  };
+
+  const handleRemoveItem = (id, variationId) => {
+    dispatch(removeItem({ id, variationId }));
+  };
 
   const handleIncrementQuantity = (id, variationId) => {
     dispatch(incrementQuantity({ id, variationId }));
   };
-  
+
   const handleDecrementQuantity = (id, variationId) => {
-    
     dispatch(decrementQuantity({ id, variationId }));
   };
-  
 
   const calculateSubtotal = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
-  }
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <>
@@ -50,38 +52,46 @@ export default function Component() {
           </button>
         </div>
         
-        <div className="flex flex-col h-[calc(100vh-200px)] overflow-auto">
+        <div className="flex flex-col h-[calc(100vh-200px)] overflow-auto cart-body">
           {cartItems.map((item) => (
-            <div key={item.id} className="p-4 border-b">
+            <div key={`${item.id}-${item.variationId}`} className="p-4 border-b">
               <div className="flex items-center gap-4">
+              <button
+                  onClick={() => handleRemoveItem(item.id, item.variationId)}
+                  className="text-2xl p-0 border-0 b-0 bg-white text-gray-400 hover:text-gray-500"
+                  aria-label="Remove item"
+                >
+                  ×
+                </button>
                 <img
-                  src={item.img?.src}
+                  src={item.img?.src || item.img[0]}
                   alt={item.id}
                   width={80}
                   height={80}
                   className="rounded-lg object-cover"
                 />
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-medium truncate">{item.name}</h3>
+                  <h3 className="text-sm font-medium truncate">{item?.name}</h3>
                   <div className="mt-2 flex items-center gap-2">
                     <button
-            onClick={() => handleDecrementQuantity(item.id, item.variationId)}
-            className="flex h-6 w-6 items-center justify-center rounded border text-sm"
+                      onClick={() => handleDecrementQuantity(item.id, item.variationId)}
+                      className="flex h-6 w-6 items-center justify-center rounded border text-sm"
                     >
                       -
                     </button>
                     <span className="w-8 text-center">{item.quantity}</span>
                     <button
-            onClick={() => handleIncrementQuantity(item.id, item.variationId)}
-            className="flex h-6 w-6 items-center justify-center rounded border text-sm"
+                      onClick={() => handleIncrementQuantity(item.id, item.variationId)}
+                      className="flex h-6 w-6 items-center justify-center rounded border text-sm"
                     >
                       +
                     </button>
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="font-medium">Rs{item.price}.00</span>
+                  <span className="font-medium">Rs {item.price * item.quantity}.00</span>
                 </div>
+              
               </div>
             </div>
           ))}
@@ -114,5 +124,5 @@ export default function Component() {
         </div>
       </div>
     </>
-  )
+  );
 }

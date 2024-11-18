@@ -1,26 +1,29 @@
+"use-client";
 import Image from "next/image";
 import React, { useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-
-import { Navigation } from "swiper/modules";
+import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductData } from "@/store/slice/productslice";
 import Link from "next/link";
-import { addItem } from "@/store/slice/cartslice";
 
+// Dynamically import Swiper
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 
 const Product = () => {
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     dispatch(fetchProductData());
   }, [dispatch]);
-  const productData = useSelector((state) => state?.products?.data?.products);
-  console.log(productData);
-  const publishedProducts = productData?.filter(
+
+  const productData = useSelector((state) => state.products?.data);
+
+
+console.log(productData,"productData")
+  const publishedProducts = productData?.products?.filter(
     (product) => product.status !== "draft"
   );
   return (

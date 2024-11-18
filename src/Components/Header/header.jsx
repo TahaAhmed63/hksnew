@@ -1,3 +1,4 @@
+"use-client"
 import React, { useEffect, useState } from "react";
 import Logo from "../../assets/homepage-images/header-logo.png";
 import Link from "next/link";
@@ -6,7 +7,7 @@ import menuItems from "../../Components/Header/Menu/menuItems";
 import Menu from "./Menu/Menu";
 import { FaBasketShopping, FaBars } from "react-icons/fa6"; // Import FaBars for the hamburger icon
 import SlidingMenu from "./Menu/SlidingMenu";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleCart } from "@/store/slice/cartslice";
 
 const Header = () => {
@@ -35,9 +36,10 @@ const Header = () => {
   const toggleMenu = () => {
     setMenuOpen((prevState) => !prevState); // Toggle menu visibility
   };
-
+const itemCount = useSelector((state) => state?.cart?.itemCount)
+console.log(itemCount,"itemCount")
   return (
-    <header className={`site-header ${sticky ? "darkHeader max-limit" : ""}`}>
+    <header className={`site-header ${sticky ? "darkHeader max-limit" : ""}`} suppressHydrationWarning >
       <div className="mainmenu">
         <div className="container">
           <div className="site-branding">
@@ -70,7 +72,7 @@ const Header = () => {
                     className="bucket-icon openbtn"
                   >
                     <FaBasketShopping />
-                    <span id="mcart-stotal">0</span>
+                    <span id="mcart-stotal">{itemCount}</span>
                   </button>
                 </div>
               </div>
