@@ -3,14 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
-    items: [],
+    items: [], // Default empty cart for SSR
     total: 0,
     itemCount: 0,
     isOpen: false,
   },
   reducers: {
     addItem: (state, action) => {
-      // Ensure each variation is treated as a unique item by including variationId
       const existingItem = state.items.find(
         item => item.id === action.payload.id && item.variationId === action.payload.variationId
       );
@@ -49,21 +48,28 @@ const cartSlice = createSlice({
       }
     },
     decrementQuantity: (state, action) => {
-        const { id, variationId } = action.payload;
-        const item = state.items.find(
-          (item) => item.id === id && item.variationId === variationId
-        );
-        if (item && item.quantity > 1) {
-          item.quantity -= 1;
-          state.itemCount -= 1;
-          state.total -= item.price;
-        }
-      },
+      const { id, variationId } = action.payload;
+      const item = state.items.find(
+        (item) => item.id === id && item.variationId === variationId
+      );
+      if (item && item.quantity > 1) {
+        item.quantity -= 1;
+        state.itemCount -= 1;
+        state.total -= item.price;
+      }
+    },
     toggleCart: (state) => {
-        state.isOpen = !state.isOpen;
-      },
+      state.isOpen = !state.isOpen;
+    },
   },
 });
 
-export const { addItem, removeItem, clearCart, incrementQuantity, decrementQuantity,toggleCart } = cartSlice.actions;
+export const {
+  addItem,
+  removeItem,
+  clearCart,
+  incrementQuantity,
+  decrementQuantity,
+  toggleCart,
+} = cartSlice.actions;
 export default cartSlice.reducer;

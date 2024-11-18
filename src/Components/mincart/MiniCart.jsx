@@ -5,12 +5,17 @@ import { toggleCart, removeItem, incrementQuantity, decrementQuantity } from "..
 import Image from "next/image";
 import Link from "next/link";
 import { ShoppingBag } from 'lucide-react';
+import { useEffect, useState } from "react";
 
 export default function Component() {
   const dispatch = useDispatch();
+    const [isHydrated, setIsHydrated] = useState(false);
+
   const cartItems = useSelector((state) => state.cart.items);
   const isOpen = useSelector((state) => state.cart.isOpen);
-
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
   const handleClose = () => {
     dispatch(toggleCart(false));
   };
@@ -30,6 +35,9 @@ export default function Component() {
   const calculateSubtotal = () => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
+  if (!isHydrated) {
+    return null; // Render nothing on the server
+  }
 
   if (!isOpen) return null;
 
