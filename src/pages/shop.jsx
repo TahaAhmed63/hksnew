@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 const Shop = ({ products }) => {
   const dispatch = useDispatch();
 
-  // Handle empty or unpublished products
+  // Handle empty or unpublished productssds
   if (!products || products.length === 0) {
     return (
       <div className="singpgbanner">
