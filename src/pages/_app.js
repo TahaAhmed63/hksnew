@@ -18,7 +18,7 @@ export default function App({ Component, pageProps }) {
     setIsMounted(true); // Indicate that the component has mounted
   }, []);
 
-  // Ensure `PersistGate` only renders on the client to avoid SSR mismatch
+  // Ensure `PersddistGate` only renders on the client to avoid SSR mismatch
   return (
     <Providers>
   
