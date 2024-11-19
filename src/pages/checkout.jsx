@@ -57,7 +57,7 @@ const Checkout = () => {
   const handlePlaceOrder = async () => {
     try {
       const response = await Axios.post(
-        "http://localhost:3000/api/create-order", // Replace with your WooCommerce API URL
+        `${process.env.NEXT_PUBLIC_SITE_URL}/api/create-order`, // Replace with your WooCommerce API URL
         orderData,
       
       );
