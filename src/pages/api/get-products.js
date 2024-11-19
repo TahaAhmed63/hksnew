@@ -21,7 +21,7 @@ const cache = {};
 export default async function handler(req, res) {
   const { perPage, page } = req?.query ?? {};
   console.log("URL:", process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL);
-  console.log("Key:", process.env.WC_CONSUMER_KEY ? "Loaded" : "Missing");
+  console.log("Key:", process.env.WC_CONSUMER_KEY ? WC_CONSUMER_KEY : "Missing");
   console.log("Secret:", process.env.WC_CONSUMER_SECRET ? "Loaded" : "Missing");
   const cacheKey = `products-${perPage}-${page}`;
   if (cache[cacheKey]) {
