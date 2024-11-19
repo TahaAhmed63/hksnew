@@ -17,7 +17,7 @@ const ThankYouPage = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const response = await fetch(`${Baseurl}/order/${order_id}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/order/${order_id}`);
         const data = await response.json();
 
         if (data.success) {
