@@ -1,1 +1,1 @@
-export const Baseurl="https://hks-frontend-dhct.vercel.app/api"
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
