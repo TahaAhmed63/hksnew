@@ -103,8 +103,8 @@ const Shop = ({ products }) => {
 // Fetch products during build time
 export async function getStaticProps() {
   try {
-    console.log(`Fetching from: ${Baseurl}/get-products`);
-    const response = await fetch(`${Baseurl}/get-products`);
+    // console.log(`Fetching from: ${Baseurl}/get-products`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/get-products`);
 
     // Check if response is valid
     if (!response.ok) {
