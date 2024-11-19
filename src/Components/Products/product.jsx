@@ -49,7 +49,7 @@ console.log(productData,"productData")
           },
         }}
       >
-        {publishedProducts?.map((product) => (
+        {publishedProducts?.map((product,key) => (
           <SwiperSlide key={product.id}>
             <div className="item">
               <div className="featured-img">

@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   
   webpack(config) {
     config.module.rules.push({
@@ -19,6 +19,9 @@ const nextConfig = {
   eslint: {
     // Disable ESLint during builds
     ignoreDuringBuilds: true,
+    'import/no-unresolved': [2, { caseSensitive: true }],
+
+
   },
   
 };
