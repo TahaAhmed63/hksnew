@@ -12,7 +12,7 @@ export const fetchProductData = createAsyncThunk("get-products", async () => {
     throw error;
   }
 });
-
+//SDS
 const productslice = createSlice({
   name: "products",
   initialState: {
