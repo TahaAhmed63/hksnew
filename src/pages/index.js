@@ -13,7 +13,7 @@ import SVGComponent from './../Components/Svgmapping/SVGComponent';
 import Product from '../Components/Products/Product';
 
 
-
+//dsd
 
 export default function Home() {
   return (
