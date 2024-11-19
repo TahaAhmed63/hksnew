@@ -1,28 +1,29 @@
-"use-client"
+import React, { useState } from 'react';
 
-import React from 'react'
+const SlidingMenu = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-const slidingmenu = () => {
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);  // Toggle the menu open/close state
+  };
+
   return (
-	<nav>
-	<div class="menu-btn">
-		<div class="line line--1"></div>
-		<div class="line line--2"></div>
-		<div class="line line--3"></div>
-	</div>
+    <div className='Hamburger-icon-col '>
+      {/* Hamburger Icon */}
+      <div className="hamburger" onClick={toggleMenu}> &#9776; {/* Hamburger symbol */}
+      </div>
 
-	<div class="nav-links">
-		<a href="" class="link">Home</a>
-		<a href="" class="link">Contact</a>
-		<a href="" class="link">Profile</a>
-		<a href="" class="link">About</a>
-	</div>
-</nav>
+      {/* Slider Menu */}
+      <div className={`sliderMenu ${isOpen ? 'open' : ''}`}>
+        <ul className="menuList">
+          <li>Home</li>
+          <li>About</li>
+          <li>Services</li>
+          <li>Contact</li>
+        </ul>
+      </div>
+    </div>
+  );
+};
 
-
-
-
-  )
-}
-
-export default slidingmenu
+export default SlidingMenu;

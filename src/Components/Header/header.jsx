@@ -10,6 +10,7 @@ import SlidingMenu from "./Menu/SlidingMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleCart } from "@/store/slice/cartslice";
 
+
 const Header = () => {
   const [sticky, setSticky] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false); // State to control the menu toggle
@@ -59,10 +60,10 @@ console.log(itemCount,"itemCount")
 
               {/* For small screens, display the toggle button */}
               <div className="col-lg-1 col-7 mt-auto mb-auto p-0 d-lg-none">
-                <button onClick={toggleMenu} className="menu-toggle-btn">
-                  <FaBars />
-                </button>
-                <SlidingMenu/>
+               
+                  <SlidingMenu  />
+                
+               
               </div>
 
               <div className="col-md-1  mt-auto mb-auto p-0">
@@ -79,12 +80,6 @@ console.log(itemCount,"itemCount")
             </div>
           </div>
 
-          {/* For small screens, show the menu when toggled */}
-          {menuOpen && (
-            <div className="mobile-menu">
-              <Menu items={menuItems} />
-            </div>
-          )}
         </div>
       </div>
     </header>

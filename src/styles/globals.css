@@ -1010,6 +1010,8 @@ body::-webkit-scrollbar {
   line-height: 40px;
   height: 40px;
   display: inline-block;
+  display: flex;
+  align-items: center;
 }
 /* site branding logo css */
 .logo img {
@@ -1042,6 +1044,13 @@ body::-webkit-scrollbar {
 .mobile-menu {
   display: block; /* This will show the menu when toggled */
 }
+
+.Hamburger-icon-col{
+  position: relative;
+}
+
+
+
 
 /*Header cart*/
 
@@ -1826,64 +1835,66 @@ svg{
 }
 
 @media screen and (max-width: 992px) {
-  .menu-toggle-btn {
-    display: block; /* Show the hamburger button */
-    background: none;
-    border: none;
-    font-size: 30px;
-    cursor: pointer;
-    float: right;
-    color: #ffff;
-  }
+ /* Base styles for the hamburger */
+ .hamburger {
+  font-size: 30px;
+  cursor: pointer;
+  position: relative;
 
-  .mobile-menu.show {
-    display: block; /* Show the mobile menu when toggled */
-  }
+  color: #fff;
+  float: right;
 }
 
-/* Sliding Menu Styles */
-/* Sliding Menu Styles */
-.sliding-menu {
+/* The slider menu */
+.sliderMenu {
   position: fixed;
   top: 0;
-  left: -500px; /* Initially hidden off-screen */
-  width: 500px;
+  left: -75%; /* Start off-screen */
+  width: 75%;
   height: 100%;
-  background-color: black;
+  background-color: rgb(0, 0, 0);
   color: white;
-  transition: left 0.3s ease; /* Smooth transition */
-  padding: 20px;
+  transition: left 0.3s ease-in-out; /* Smooth transition */
+  z-index: 1000;
 }
 
-.sliding-menu.open {
-  left: 0; /* Slide in */
+/* When the menu is open, slide it into view */
+.sliderMenu.open {
+  left: 0;
 }
 
-.menu-toggle-btn {
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: rgb(255, 255, 255);
-  cursor: pointer;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.sliding-menu ul {
+/* Menu items */
+.menuList {
   list-style: none;
-  padding: 0;
+  padding: 20px;
+  margin: 0;
 }
 
-.sliding-menu ul li {
-  margin: 15px 0;
+.menuList li {
+  padding: 10px 0;
+  border-bottom: 1px solid #444;
 }
+
+.menuList li:hover {
+  background-color: #444;
+}
+
+/* Default styles for larger screens (992px and above) */
+.menu-toggle-btn {
+  display: block; /* Hide the toggle button on larger screens */
+}
+
+/* Styles for the mobile menu */
+.mobile-menu {
+  display: none; /* This will show the menu when toggled */
+}
+
+/* svg{
+  display: none;
+} */
+
+}
+
 
 
 
