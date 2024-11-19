@@ -1,4 +1,3 @@
-"use-client"
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Footer from "@/Components/Footer/footer";
@@ -8,10 +7,9 @@ import Allpagebanner from "../../assets/homepage-images/allpagebanner.jpg";
 import { Baseurl } from "../../../BaseUrl";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-// import RelatedSlider from "@/Components/RelatedproductSlider/RelatedSlider";
+import RelatedSlider from "@/Components/RelatedproductSlider/RelatedSlider";
 import { useDispatch } from "react-redux";
-import { addItem, toggleCart } from "@/store/slice/cartslice";
-const  RelatedSlider=dynamic(() => import('./../../Components/RelatedproductSlider/RelatedSlider'), { ssr: false });
+import { addItem } from "@/store/slice/cartslice";
 const ProductTabs = dynamic(() => import("./productTabs"), { ssr: false });
 const ProductPage = ({ product }) => {
   const [selectedVariation, setSelectedVariation] = useState(null);
@@ -25,15 +23,12 @@ const ProductPage = ({ product }) => {
   const handleAddToCart = () => {
     const item = {
       id: singleProduct.id,
-      name: singleProduct?.name + selectedVariation?.name || singleProduct?.name,
-      variationName: selectedVariation?.name,
       variationId: selectedVariation?.id,
       price: selectedVariation ? selectedVariation.price : singleProduct.price,
       quantity,
-      img:selectedVariation? selectedVariation?.image : singleProduct?.images.map((e)=>(e?.src))
+      img:selectedVariation? selectedVariation?.image : singleProduct?.images
     };
     dispatch(addItem(item));
-dispatch(toggleCart())
   };
   const handleVariationChange = (event) => {
     const selectedOption = event.target.value;
@@ -114,29 +109,24 @@ dispatch(toggleCart())
                 }}
               />
             </div>
-{ singleProduct?.type === "variable" &&
-    <div className="variation-select d-flex gap-2 py-2 align-items-center pb-4">
-    <label>{singleProduct?.attributes[0]?.name}</label>
-    <select
-      id="variations"
-      onChange={handleVariationChange}
-      className="form-control"
-    >
-      <option value="">Choose an option</option>
-      {singleProduct?.variations?.map((option, i) =>
-        option?.price !== "" ? (
-          <option key={i} value={option.name}>
-            {option.name}
-          </option>
-        ) : null
-      )}
-    </select>
-  </div>
-}
-{singleProduct?.type === "simple" && 
-<h6 className="stock-text">{singleProduct?.stock_quantity  +" "+ singleProduct?.stock_status }</h6>
-}
-        
+
+            <div className="variation-select d-flex gap-2 py-2 align-items-center pb-4">
+              <label>{singleProduct?.attributes[0]?.name}</label>
+              <select
+                id="variations"
+                onChange={handleVariationChange}
+                className="form-control"
+              >
+                <option value="">Choose an option</option>
+                {singleProduct?.variations?.map((option, i) =>
+                  option?.price !== "" ? (
+                    <option key={i} value={option.name}>
+                      {option.name}
+                    </option>
+                  ) : null
+                )}
+              </select>
+            </div>
             <div className="singleproduct-pricing">
               <h2>
                 {/* PKR{" "}
@@ -157,13 +147,7 @@ dispatch(toggleCart())
                 min="1"
               />
               <button onClick={handleIncrement} className="btn btn-warning">+</button>
-              <button 
-  className="btn btn-warning" 
-  onClick={handleAddToCart} 
-  disabled={singleProduct?.type === "variable"  && selectedVariation === null} // Disable the button when the condition is true
->
-  Add to basket
-</button>
+              <button className="btn btn-warning" onClick={handleAddToCart} >Add to basket</button>
             </div>
           </div>
         </div>
@@ -179,50 +163,38 @@ dispatch(toggleCart())
       {/* <h1>{product.name}</h1>
       <p>{product.description}</p>
       <p>Price: ${product.lprice}</p> */}
-     <RelatedSlider productId={singleProduct?.id} />
+      <RelatedSlider />
     </>
   );
 };
 
 export async function getStaticPaths() {
-  try {
-    const res = await fetch(`${Baseurl}/get-products`);
-    if (!res.ok) throw new Error(`Failed to fetch products: ${res.statusText}`);
-    const products = await res.json();
+  const res = await fetch(`${Baseurl}/get-products`);
+  const products = await res.json();
 
-    const paths = products?.products?.map((product) => ({
+  const paths =
+    products?.products?.map((product) => ({
       params: { slug: product.slug },
     })) || [];
 
-    return { paths, fallback: true };
-  } catch (error) {
-    console.error('Error fetching products:', error);
-    return { paths: [], fallback: true };
-  }
+  return { paths, fallback: true };
 }
 
 export async function getStaticProps({ params }) {
-  try {
-    const res = await fetch(`${Baseurl}/get-product-by-slug?slug=${params.slug}`);
-    if (!res.ok) throw new Error(`Failed to fetch product: ${res.statusText}`);
-    const product = await res.json();
+  const res = await fetch(`${Baseurl}/get-product-by-slug?slug=${params.slug}`);
+  const product = await res.json();
 
-    if (!product) {
-      return { notFound: true };
-    }
-
-    return {
-      props: {
-        product,
-      },
-    };
-  } catch (error) {
-    console.error('Error fetching product:', error);
+  if (!product) {
     return {
       notFound: true,
     };
   }
-}
 
+  return {
+    props: {
+      product,
+    },
+  };
+}
 
 export default ProductPage;
