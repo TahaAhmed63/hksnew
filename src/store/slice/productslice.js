@@ -13,6 +13,8 @@ export const fetchProductData = createAsyncThunk("get-products", async () => {
   }
 });
 //SDS
+console.log("API URL:", `${Baseurl}/api/get-products`);
+
 const productslice = createSlice({
   name: "products",
   initialState: {
