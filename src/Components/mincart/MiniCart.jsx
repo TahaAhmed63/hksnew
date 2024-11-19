@@ -8,9 +8,13 @@ import Link from "next/link";
 
 export default function Component() {
   const dispatch = useDispatch();
+    const [isHydrated, setIsHydrated] = useState(false);
+
   const cartItems = useSelector((state) => state.cart.items);
   const isOpen = useSelector((state) => state.cart.isOpen);
-
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
   const handleClose = () => {
     dispatch(toggleCart(false));
   };
@@ -31,20 +35,6 @@ export default function Component() {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
-  // Hydration state to track whether component has mounted on the client
-  const [isHydrated, setIsHydrated] = useState(false);
-
-  // This effect will trigger when the component is mounted on the client-side
-  useEffect(() => {
-    setIsHydrated(true); // After the component mounts, set isHydrated to true
-  }, []);
-
-  // If not hydrated, return a loading state or nothing
-  if (!isHydrated) {
-    return <div>Loading...</div>;
-  }
-
-  // If the cart is not open, return null (no cart shown)
   if (!isOpen) return null;
 
   return (

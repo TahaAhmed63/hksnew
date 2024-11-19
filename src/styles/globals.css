@@ -2030,10 +2030,12 @@ svg{
 }
 
 /* Close button styling */
-.h-\[calc\(100vh-200px\)\] {
-  height: calc(100vh - 200px);
+.overflow-auto {
+  overflow-y: scroll !important;
 }
-
+.h-\[calc\(100vh-200px\)\] {
+  height: 300px;
+}
 
 
 .ml-auto.text-2xl.text-gray-400.hover\:text-gray-500:hover {
@@ -2099,7 +2101,7 @@ svg{
   font-size: 0.875rem;
   font-weight: 500;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: wrap;
   overflow: hidden;
 }
 
@@ -2247,3 +2249,14 @@ button.btn-warning:hover {
 }
 
 
+
+.cart-body::-webkit-scrollbar-thumb {
+  background: #f4a61e;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.cart-body::-webkit-scrollbar {
+  width: 6px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

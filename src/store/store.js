@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // localStorage
-import rootReducer from "./reducers/rootReducer";
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 
+import storage from "redux-persist/lib/storage"; // Use localStorage
+import rootReducer from "./reducers/rootReducer";
 
 // Persist config for the `cart` slice
 const persistConfig = {
-  key: "cart",
+  key: "root", // Use a unique key
   storage,
   whitelist: ["cart"], // Only persist the `cart` slice
 };
@@ -17,7 +17,9 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // Disable serializable check for redux-persist
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
     }),
 });
 
