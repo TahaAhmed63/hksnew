@@ -4,9 +4,9 @@ import React from "react";
 import { Table, Button, Form, Container, Row, Col } from "react-bootstrap";
 import Allpagebanner from "../assets/homepage-images/allpagebanner.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleCart, removeItem, incrementQuantity, decrementQuantity } from "./../store/slice/cartslice";
+import { toggleCart, removeItem, incrementQuantity, decrementQuantity } from "../store/slice/cartslice";
 import SinglePageHeader from "@/Components/singlepageheader/SinglePageHeader";
-const cart = () => {
+const Cart = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.items);
     const isOpen = useSelector((state) => state.cart.isOpen);
@@ -48,7 +48,7 @@ const cart = () => {
             </tr>
           </thead>
           <tbody>
-          {cartItems ? cartItems?.map((cartitems,i)=>(
+          {cartItems ? cartItems?.map((cartitems,key)=>(
         <tr>
         <td>
           <Button variant="danger" size="sm"     onClick={() => handleRemoveItem(cartitems.id, cartitems.variationId)}>
@@ -120,4 +120,4 @@ const cart = () => {
   )
 }
 
-export default cart
+export default Cart

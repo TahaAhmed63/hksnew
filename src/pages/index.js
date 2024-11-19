@@ -1,7 +1,7 @@
 "use-client"
 import Image from "next/image";
 import localFont from "next/font/local";
-import Homepage from "./homepage";
+import Homepage from "./HomePage";
 import Header from "@/Components/Header/header";
 import Footer from "@/Components/Footer/footer";
 

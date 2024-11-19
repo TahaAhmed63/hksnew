@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-const explore_solution_sec = () => {
+const ExploreSolution = () => {
   return (
     <>
     <section className='explore-sec my-md-5 p-5 mainbriefs'>
@@ -22,4 +22,4 @@ const explore_solution_sec = () => {
   )
 }
 
-export default explore_solution_sec;
+export default ExploreSolution;

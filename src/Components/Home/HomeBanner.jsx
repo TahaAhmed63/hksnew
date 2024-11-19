@@ -39,7 +39,7 @@ const slides = [
   }
 ];
 
-export default function App() {
+export default function HomeBanner() {
   const [key, setKey] = useState(0);  // State to trigger animation on slide change
 
   const handleSlideChange = (swiper) => {

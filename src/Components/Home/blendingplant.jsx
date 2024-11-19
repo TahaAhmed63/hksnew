@@ -44,7 +44,7 @@ export const services = [
   
             <div className='explore-serv-content'>
               {services.map((service, index) => (
-                <div key={index} className={`exp-serv-row${Math.floor(index / 2) + 1}`}>
+                <div key={index} className={`exp-serv-row ${Math.floor(index / 2) + 1}`}>
                   <div className='icon-col p-2'>
                     <Image src={service.img} alt={`Service ${index + 1}`} />
                     <p>{service.description}</p>

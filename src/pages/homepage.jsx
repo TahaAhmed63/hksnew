@@ -1,33 +1,31 @@
-"use-client"
+"use client";
 import React from 'react';
-import Home from '../Components/Home/home-banner.jsx';
-import BriefProfile from '../Components/Home/brief_profile.jsx';
-import Blendingplant from '@/Components/Home/blendingplant.jsx';
-import Explore_solution_sec from '@/Components/Home/explore_solution_sec.jsx';
-import HomeVideoSec from '@/Components/Home/homevideo_Sec.jsx';
-import HomeMaplic from '@/Components/Home/homemaplic.jsx';
-import SVGComponent from '@/Components/Svgmapping/svgmapping.jsx';
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic';
 
-const Product = dynamic(() => import("@/Components/Products/product.jsx"), {
+import HomeBanner from '@/Components/Home/HomeBanner';
+import BriefProfile from '@/Components/Home/BreifProfile';
+import Blendingplant from '@/Components/Home/BlendingPlant';
+import ExploreSolution from '@/Components/Home/ExploreSolution';
+import HomeVideoSec from '@/Components/Home/HomeVideoSec';
+import SVGComponent from '@/Components/Svgmapping/Svgmapping';
+
+// Dynamic import for client-only rendering
+const Product = dynamic(() => import('@/Components/Products/Product'), {
   ssr: false,
 });
 
-const  Homepage = () => {
+const HomePage = () => {
   return (
     <>
-      <Home  suppressHydrationWarning />
+      <HomeBanner />
       <BriefProfile />
-      <Blendingplant/>
-      <Product/>
-      <Explore_solution_sec/>
-      <HomeVideoSec/>
-      {/* <HomeMaplic/> */}
-      <SVGComponent/>
-
-      </>
-   
+      <Blendingplant />
+      <Product />
+      <ExploreSolution />
+      <HomeVideoSec />
+      <SVGComponent />
+    </>
   );
-}
+};
 
-export default Homepage;
+export default HomePage;

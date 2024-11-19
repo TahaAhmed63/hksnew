@@ -185,32 +185,44 @@ dispatch(toggleCart())
 };
 
 export async function getStaticPaths() {
-  const res = await fetch(`${Baseurl}/get-products`);
-  const products = await res.json();
+  try {
+    const res = await fetch(`${Baseurl}/get-products`);
+    if (!res.ok) throw new Error(`Failed to fetch products: ${res.statusText}`);
+    const products = await res.json();
 
-  const paths =
-    products?.products?.map((product) => ({
+    const paths = products?.products?.map((product) => ({
       params: { slug: product.slug },
     })) || [];
 
-  return { paths, fallback: true };
+    return { paths, fallback: true };
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return { paths: [], fallback: true };
+  }
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`${Baseurl}/get-product-by-slug?slug=${params.slug}`);
-  const product = await res.json();
+  try {
+    const res = await fetch(`${Baseurl}/get-product-by-slug?slug=${params.slug}`);
+    if (!res.ok) throw new Error(`Failed to fetch product: ${res.statusText}`);
+    const product = await res.json();
 
-  if (!product) {
+    if (!product) {
+      return { notFound: true };
+    }
+
+    return {
+      props: {
+        product,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching product:', error);
     return {
       notFound: true,
     };
   }
-
-  return {
-    props: {
-      product,
-    },
-  };
 }
+
 
 export default ProductPage;
