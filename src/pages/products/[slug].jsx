@@ -186,7 +186,7 @@ dispatch(toggleCart())
 
 export async function getStaticPaths() {
   try {
-    const res = await fetch(`${Baseurl}/get-products`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/get-products`);
     if (!res.ok) throw new Error(`Failed to fetch products: ${res.statusText}`);
     const products = await res.json();
 
@@ -203,7 +203,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   try {
-    const res = await fetch(`${Baseurl}/get-product-by-slug?slug=${params.slug}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/get-product-by-slug?slug=${params.slug}`);
     if (!res.ok) throw new Error(`Failed to fetch product: ${res.statusText}`);
     const product = await res.json();
 

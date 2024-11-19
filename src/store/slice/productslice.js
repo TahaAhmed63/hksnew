@@ -6,7 +6,7 @@ import { Baseurl } from "../../../BaseUrl";
 
 export const fetchProductData = createAsyncThunk("get-products", async () => {
   try {
-    const response = await axios.get(`${Baseurl}/api/get-products`);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/get-products`);
     return response.data;
   } catch (error) {
     throw error;
