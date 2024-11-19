@@ -26,6 +26,7 @@ const ProductPage = ({ product }) => {
     const item = {
       id: singleProduct.id,
       name: singleProduct?.name + selectedVariation?.name || singleProduct?.name,
+      variationName: selectedVariation?.name,
       variationId: selectedVariation?.id,
       price: selectedVariation ? selectedVariation.price : singleProduct.price,
       quantity,

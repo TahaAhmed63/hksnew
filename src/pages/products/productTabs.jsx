@@ -95,7 +95,7 @@ const ProductTabs = ({ productData,additionalinfo }) => {
   }
 
   return (
-    <div className="singleproduct-tabs">
+    <div className="singleproduct-tabs" suppressHydrationWarning >
       <ul className="tabs wc-tabs py-md-4" role="tablist">
         {tabs.map((tab) => (
           <li

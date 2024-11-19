@@ -33,6 +33,21 @@ console.log(productData,"productData")
         navigation={false}
         spaceBetween={30}
         slidesPerView={3}
+        // Add breakpoints to control the number of slides per view based on screen size
+        breakpoints={{
+          // When the screen width is >= 640px, show 1 slide
+          640: {
+            slidesPerView: 1,
+          },
+          // When the screen width is >= 768px, show 2 slides
+          768: {
+            slidesPerView: 2,
+          },
+          // When the screen width is >= 1024px, show 3 slides
+          1024: {
+            slidesPerView: 3,
+          },
+        }}
       >
         {publishedProducts?.map((product) => (
           <SwiperSlide key={product.id}>

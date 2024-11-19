@@ -9,6 +9,7 @@ import store, { persistor } from "@/store/store";
 import MiniCart from "@/Components/mincart/MiniCart";
 import { PersistGate } from "redux-persist/integration/react";
 import { useEffect, useState } from "react";
+import { Providers } from "@/store/ReduxProvider";
 
 export default function App({ Component, pageProps }) {
   const [isMounted, setIsMounted] = useState(false);
@@ -19,22 +20,15 @@ export default function App({ Component, pageProps }) {
 
   // Ensure `PersistGate` only renders on the client to avoid SSR mismatch
   return (
-    <Provider store={store}>
-      {isMounted ? (
-        <PersistGate loading={null} persistor={persistor}>
+    <Providers>
+  
+
           <Header />
           <Component {...pageProps} />
           <Footer />
           <MiniCart />
-        </PersistGate>
-      ) : (
-        <>
-          <Header />
-          <Component {...pageProps} />
-          <Footer />
-          <MiniCart />
-        </>
-      )}
-    </Provider>
+    
+  
+    </Providers>
   );
 }

@@ -1,4 +1,6 @@
 
+"use-client"
+
 import Image from "next/image";
 import Maskgroup from "../../assets/homepage-images/mask-group.png"
 

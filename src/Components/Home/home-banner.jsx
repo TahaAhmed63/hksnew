@@ -1,3 +1,5 @@
+"use-client"
+
 import Link from "next/link";
 import Image from "next/image";
 // Import Swiper React components
@@ -12,6 +14,8 @@ import { Navigation } from 'swiper/modules';
 // Import Framer Motion
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+
+
 
 // Define images and corresponding text content
 const slides = [

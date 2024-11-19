@@ -39,7 +39,7 @@ const Header = () => {
 const itemCount = useSelector((state) => state?.cart?.itemCount)
 console.log(itemCount,"itemCount")
   return (
-    <header className={`site-header ${sticky ? "darkHeader max-limit" : ""}`} suppressHydrationWarning >
+    <header className={`site-header ${sticky ? "darkHeader max-limit" : ""}`} suppressHydrationWarning={true} >
       <div className="mainmenu">
         <div className="container">
           <div className="site-branding">
@@ -59,9 +59,9 @@ console.log(itemCount,"itemCount")
 
               {/* For small screens, display the toggle button */}
               <div className="col-lg-1 col-7 mt-auto mb-auto p-0 d-lg-none">
-                {/* <button onClick={toggleMenu} className="menu-toggle-btn">
+                <button onClick={toggleMenu} className="menu-toggle-btn">
                   <FaBars />
-                </button> */}
+                </button>
                 <SlidingMenu/>
               </div>
 

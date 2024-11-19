@@ -1,3 +1,5 @@
+"use-client"
+
 import MyIcon from '../../assets/homepage-images/pk.svg';
 
 const HomeMaplic = () => {
