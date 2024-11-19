@@ -13,7 +13,6 @@ import { toggleCart } from "@/store/slice/cartslice";
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); // State to control the menu toggle
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,10 +32,7 @@ const Header = () => {
     };
   }, []);
 
-  // Function to toggle the menu visibility
-  const toggleMenu = () => {
-    setMenuOpen((prevState) => !prevState); // Toggle menu visibility
-  };
+ 
 const itemCount = useSelector((state) => state?.cart?.itemCount)
 console.log(itemCount,"itemCount")
   return (

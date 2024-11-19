@@ -6,7 +6,7 @@ const SVGComponent = (props) => {
   const handleMouseEnter = (id) => setHovered(id);
   const handleMouseLeave = () => setHovered(null);
   return(
-  <svg
+  <svg className="maplic-svg"
     baseProfile="tiny"
     fill="#222222"
     height={959}
