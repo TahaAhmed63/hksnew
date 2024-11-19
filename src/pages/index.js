@@ -10,6 +10,7 @@ import HomeVideoSec from './../Components/Home/HomeVideoSec';
 import SVGComponent from './../Components/Svgmapping/SVGComponent';
 //hdsfs
 // Dynamic import for client-only rendering
+
 const Product = dynamic(() => import('../Components/Products/Product'), {
   ssr: false,
 });
