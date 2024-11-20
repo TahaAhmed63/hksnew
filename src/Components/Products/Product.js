@@ -27,7 +27,12 @@ console.log(productData,"productData")
     (product) => product.status !== "draft"
   );
   return (
-    <div className="container fslider py-md-5">
+    <div className="container fslider  py-4">
+
+    <div className="related-products-slider pb-3">
+          <h2>Featured Products</h2>
+      </div> 
+
       <Swiper
         modules={[Navigation]}
         navigation={false}
@@ -36,11 +41,13 @@ console.log(productData,"productData")
         // Add breakpoints to control the number of slides per view based on screen size
         breakpoints={{
           // When the screen width is >= 640px, show 1 slide
-          640: {
+      
+          300: {
             slidesPerView: 1,
           },
+         
           // When the screen width is >= 768px, show 2 slides
-          768: {
+          675: {
             slidesPerView: 2,
           },
           // When the screen width is >= 1024px, show 3 slides

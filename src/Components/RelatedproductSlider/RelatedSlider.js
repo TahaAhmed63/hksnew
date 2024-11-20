@@ -26,7 +26,10 @@ const Product = ({ productId }) => {
   );
 
   return (
-    <div className="container fslider py-md-5">
+    <div className="container fslider ">
+      <div className="related-products-slider">
+          <h2>Related Products</h2>
+      </div> 
       <Swiper
         modules={[Navigation]}
         navigation={false}
@@ -35,7 +38,7 @@ const Product = ({ productId }) => {
       >
         {publishedProducts?.map((product) => (
           <SwiperSlide key={product.id}>
-            <div className="singpg-products-display py-md-5">
+            <div className="singpg-products-display py-md-4">
               <div className=" fslider">
                 <div className="item">
                   <div className="featured-img">

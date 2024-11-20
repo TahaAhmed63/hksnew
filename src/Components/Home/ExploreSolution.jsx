@@ -5,7 +5,7 @@ import React from 'react'
 const ExploreSolution = () => {
   return (
     <>
-    <section className='explore-sec my-md-5 p-5 mainbriefs'>
+    <section className='explore-sec my-5 p-5 mainbriefs'>
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">

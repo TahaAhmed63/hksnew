@@ -3,7 +3,7 @@ import React from 'react'
 const ExploreSolutionSec = () => {
   return (
     <>
-    <section className='explore-sec my-md-5 p-5 mainbriefs'>
+    <section className='explore-sec p-md-5 p-4 mainbriefs'>
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">

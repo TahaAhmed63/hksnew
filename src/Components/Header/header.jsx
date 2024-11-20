@@ -41,7 +41,7 @@ console.log(itemCount,"itemCount")
         <div className="container">
           <div className="site-branding">
             <div className="row">
-              <div className="col-lg-3 col-md-4 col-6 p-0">
+              <div className="col-lg-3 col-md-4 col-5 p-0">
                 <div className="logo">
                   <Link href="/" rel="home">
                     <Image src={Logo} alt="header-logo-img" />
@@ -55,14 +55,14 @@ console.log(itemCount,"itemCount")
               </div>
 
               {/* For small screens, display the toggle button */}
-              <div className="col-lg-1 col-7 mt-auto mb-auto p-0 d-lg-none">
+              <div className="col-lg-1 col-md-7 col-5 mt-auto mb-auto p-0 d-lg-none">
                
                   <SlidingMenu  />
                 
                
               </div>
 
-              <div className="col-md-1  mt-auto mb-auto p-0">
+              <div className="col-1  mt-auto mb-auto p-0">
                 <div className="cart-container">
                   <button
               onClick={() => dispatch(toggleCart())}

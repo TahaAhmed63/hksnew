@@ -960,6 +960,10 @@ h2 strong {
   font-family: "interbold";
 }
 
+#__next{
+  overflow-x: hidden;
+}
+
 /*  Body  */
 
 body {
@@ -1023,15 +1027,17 @@ body::-webkit-scrollbar {
   width: 61%;
 }
 
+
 .darkHeader {
   background: #ffffff !important;
-  position: sticky !important;
+  /* position: sticky !important;
   top: 0;
   padding: 4px 0px !important;
-  z-index: 9;
+  z-index: 9; */
 }
 
-.darkHeader .cart-container svg {
+.darkHeader .cart-container svg,
+.darkHeader .hamburger {
   color: #000000 !important;
 }
 
@@ -1136,17 +1142,29 @@ body::-webkit-scrollbar {
   font-weight: 200;
 }
 
+.mc4wp-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .footer-input input {
   padding: 6px 8px !important;
+  border-radius: 0px;
+  width: 200px;
 }
 
 .footer-input button {
   background: #f4a61e !important;
   font-size: 15px;
   width: 200px;
+  height: 38px;
   color: #fff !important;
+  border-radius: 0px;
   border: 0px !important;
+  margin: 0px !important;
 }
+
 
 .footermenu ul {
   margin: 0px !important;
@@ -1193,13 +1211,21 @@ a {
 
 /* Home Slider Css */
 
+.banner-desktop{
+  display: block;
+}
+
+.banner-mobile{
+  display: none;
+}
+
 .swiper-wrapper,
 .swiper {
   position: relative;
 }
 
 .swiper img {
-  height: 907px;
+  height: 100%;
   width: 100%;
 }
 
@@ -1259,8 +1285,8 @@ a {
   padding: 60px !important;
 }
 
-.exp-serv-row1,
-.exp-serv-row2 {
+.exp-serv-row,
+.exp-serv-row {
   display: inline-block;
   width: 50%;
 }
@@ -1554,6 +1580,11 @@ svg{
   display: none;
 }
 
+/* Related Slider Css */
+.related-products-slider h2 {
+  color: #FFB715;
+}
+
 /* brief */
 .mainbrief {
   background: #222222;
@@ -1832,6 +1863,21 @@ svg{
   .header-menu ul li a {
     padding: 10px 13px;
   }
+
+}
+
+@media screen and (max-width: 1200px) {
+
+   /* Brief sec home page css */
+   .mainbrief,
+   .content-bg{
+    padding: 40px !important;
+  }
+
+  .mainbrief button {
+  width: auto !important;
+}
+
 }
 
 @media screen and (max-width: 992px) {
@@ -1843,6 +1889,11 @@ svg{
 
   color: #fff;
   float: right;
+}
+
+/* footer input */
+.mc4wp-form-fields {
+  flex-direction: row !important;
 }
 
 /* The slider menu */
@@ -1909,8 +1960,187 @@ svg{
     max-height: 500px;
 }
 
+
 }
 
+
+@media screen and (max-width: 768px) {
+
+  .banner-desktop{
+    display: none;
+  }
+
+  .banner-mobile{
+    display: block;
+  }
+
+  .flexrow{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .mainbriefs button {
+    width: 100% !important;
+  }
+
+  /* Banner slider css */
+  .banner-mobile{
+    width: 100%;
+      height: 300px;
+      background-size: cover !important;
+      background-repeat: no-repeat !important;
+  }
+  .swiper-content p{
+    font-size: 8px;
+    line-height: 10px;
+  }
+
+  .swiper-content {
+    top: 35%;
+  }
+
+  .swiper-content h1 {
+    font-size: 14px;
+    line-height: 20px;
+    border-left: 5px solid #f4a61e;
+  }
+
+  .slider-cta button{
+    font-size: 6px !important;
+    padding: 8px !important;
+  }
+
+  .mainbrief {
+  width: 100% !important;
+  border-radius: 0px !important;
+}
+
+.explore-sec-content{
+  width: 100% !important;
+}
+.explore-sec{
+  height: 100% !important;
+}
+
+/* featured prod css */
+
+.fslider .item h2 {
+  font-size: 15px !important;
+}
+.fslider .item .innerexcept {
+  font-size: 12px !important;
+}
+
+.btnproducts a {
+  width: 48% !important;
+  
+}
+
+/* Maplic css */
+.maplic-svg {
+  max-width: 400px;
+  max-height: 400px;
+}
+
+/*  */
+
+
+}
+
+
+/* SVG Maplic */
+
+.mapplic-svg{
+  width: 60%;
+  height: 100%;
+}
+.mapplic-svg text{
+  text-transform: capitalize;
+  font-family: 'interregular';
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Tooltip styling */
+.tooltip {
+  visibility: hidden;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Tooltip shown when hovering over the text */
+.tooltip-target:hover + .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+
+
+.st1:hover,
+.st2:hover,
+.st3:hover,
+.st4:hover,
+.st5:hover,
+.st6:hover,
+.st7:hover,
+.st8:hover
+{
+  fill: #FFE4C4;
+}
+
+
+
+  .st0 {
+    fill: #fff;
+  }
+
+  .st1 {
+    fill: #222222;
+    stroke: #FFFFFF;
+    stroke-miterlimit: 10;
+  }
+
+  .st2 {
+    fill: #222222;
+    stroke: #FFFFFF;
+    stroke-miterlimit: 10;
+  }
+
+  .st3 {
+    fill: #6F9C76;
+    stroke: #FFFFFF;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .st4 {
+    fill: #F7A41D;
+  }
+
+  .st5 {
+    font-family: 'Montserrat-Bold';
+  }
+
+  .st6 {
+    font-size: 12px;
+  }
+
+  .st7 {
+    font-size: 10px;
+  }
+
+  .st8 {
+    opacity: 0.3;
+    fill: #F7A41D;
+  }
 
 
 

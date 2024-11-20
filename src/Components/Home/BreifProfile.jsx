@@ -8,9 +8,9 @@ const BreifProfile = () => {
   return (
    
      
-     <div className="container-fluid py-md-5 p-0">
-        <div className="row">
-                <div className="col-md-6 m-auto">
+     <div className="container-fluid py-md-5 py-4 p-0">
+        <div className="row flexrow">
+                <div className="col-lg-6 col-12 m-auto p-0">
                     <div className="mainbrief">
                             <h2>BRIEF PROFILE</h2>
                             <p>HKS GLOBAL PETROLEUM is a pioneer in lubricants and grease manufacturing company registered with SECP (Securities and Exchange Commission of Pakistan). We offer a wide range of high-quality, high-performance lubricants that address the ever-changing and complex requirements of customers.</p>
@@ -20,7 +20,7 @@ const BreifProfile = () => {
                     </div>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-lg-6 col-12p-0">
                     <div className="bimg">
                         <Image src={Maskgroup} alt="" />
                     </div>

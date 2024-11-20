@@ -33,9 +33,9 @@ export const services = [
 
   const BlendingPlant = () => {
     return (
-      <div className='container-fluid'>
+      <div className='container-fluid p-0'>
         <div className='row'>
-          <div className='col-md-6 content-bg'>
+          <div className='col-lg-6 col-12 content-bg'>
             <div className='content-wrap'>
               <h2>Lube Oil <br/> Blending Plant</h2>
               <p>HKS GLOBAL PETROLEUM is blending Korean based oil with group 2 products at high-tech plant, which is one of the reliable and infallible toll blending plant in Pakistan. We are also providing a facility of oil sample testing laboratory.</p>
@@ -53,7 +53,7 @@ export const services = [
               ))}
             </div>
           </div>
-          <div className='col-md-6 p-0'>
+          <div className='col-lg-6 col-12 p-0 bimg'>
                 <Image src={MaskGroup}  />
           </div>
         </div>
