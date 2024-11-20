@@ -126,7 +126,7 @@ export async function getStaticProps() {
       props: {
         products: [], // Return an empty array if fetch fails
       },
-      revalidate: 10, // Attempt to fetch again after 10 seconds
+      revalidate: 2, // Attempt to fetch again after 10 seconds
     };
   }
 }
