@@ -2506,3 +2506,16 @@ button.btn-warning:hover {
   overflow-x: hidden;
   overflow-y: scroll;
 }
+
+
+.mapplic-tooltip-title {
+  color: #333;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 20px;
+  margin: 0 12px 0 0 !important;
+}
+.mapplic-element .mapplic-tooltip * {
+  scrollbar-color: #ddd #fff;
+}

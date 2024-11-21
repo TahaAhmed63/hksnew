@@ -1,7 +1,16 @@
-import * as React from "react";
+import { useState } from "react";
+// import React from "react";
 
-const SVGComponent = (props) => (
-  <svg
+const SVGComponent = (props) => {
+  const [visibleTooltip, setVisibleTooltip] = useState(null); // Track which tooltip is visible
+
+  const handleTextClick = (placeName) => {
+    setVisibleTooltip(visibleTooltip === placeName ? null : placeName); // Toggle visibility
+  };
+return (
+<>
+<div style={{position:'relative'}}>
+<svg
   className="mapplic-svg"
     id="Layer_1"
     xmlns="http://www.w3.org/2000/svg"
@@ -82,21 +91,48 @@ const SVGComponent = (props) => (
       />
     </g>
     <g>
-      <text
+    {visibleTooltip === "Giglgit balistan" && (
+          <g>
+            <rect
+          x={"806.6"}
+          y={"115.8"}
+              width="120"
+              height="40"
+              rx="5"
+              ry="5"
+              fill="#fff"
+              stroke="#ccc"
+              strokeWidth="1"
+              shadow="2px 2px 6px rgba(0,0,0,0.2)"
+            />
+            <text  y="-10"x="-20"  transform="matrix(1 0 0 1 853.3349 148.8936)"
+        className="st4 st5 st6" fontSize="14px" fill="#000">
+            Giglgit balistan
+            </text>
+          </g>
+        )}
+    <text
         transform="matrix(1 0 0 1 853.3349 148.8936)"
+        y={"20"}
         className="st4 st5 st6"
+        onClick={(e) => handleTextClick( "Giglgit balistan")}
       >
-        {"Giglgit"}
+        {"Giglgit balistan"}
       </text>
     </g>
     <g>
-      <text
+   
+   
+   
+    </g>
+    {/* <g>
+      <text 
         transform="matrix(1 0 0 1 852.1685 160.5796)"
         className="st4 st5 st7"
       >
         {"balistan"}
       </text>
-    </g>
+    </g> */}
     <rect x={543.8} y={350.3} className="st4" width={85.2} height={23.6} />
     <rect x={747.3} y={388.7} className="st4" width={73.9} height={23.6} />
     <rect x={360.9} y={497.1} className="st4" width={67.4} height={23.6} />
@@ -105,15 +141,19 @@ const SVGComponent = (props) => (
       <text
         transform="matrix(1 0 0 1 679.9893 175.1062)"
         className="st4 st5 st6 "
+        onClick={(e) => handleTextClick(e, "Khyber")}
       >
         {"Khyber"}
       </text>
+      
     </g>
     <rect x={761.1} y={194.4} className="st4" width={108.2} height={23.6} />
+
     <g>
       <text
         transform="matrix(1 0 0 1 654.4301 189.6115)"
         className="st4 st5 st6"
+        onClick={(e) => handleTextClick(e, "pakhtunkhwa")}
       >
         {"pakhtunkhwa"}
       </text>
@@ -336,5 +376,10 @@ const SVGComponent = (props) => (
     <circle className="st4" cx={507.5} cy={445} r={1.7} />
     <circle className="st4" cx={372.5} cy={460.3} r={1.7} />
   </svg>
-);
+
+</div>
+</>
+)
+  
+};
 export default SVGComponent;
