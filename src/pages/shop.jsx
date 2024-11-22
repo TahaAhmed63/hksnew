@@ -51,7 +51,7 @@ const Shop = ({ products }) => {
         </div>
       </div>
 
-      <div className="singpg-products-display py-md-5">
+      <div className="singpg-products-display py-md-5 py-4">
         <div className="container fslider">
           <div className="row">
             {publishedProducts.map((product) => (
