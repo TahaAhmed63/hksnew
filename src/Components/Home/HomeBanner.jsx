@@ -63,7 +63,7 @@ export default function HomeBanner() {
 
               {/* Description one Animation */}
                   <motion.p
-                    className="pb-md-4 pb-2 m-0 p-0"
+                    className="pb-md-4 pb-3 m-0 p-0"
                     initial={{ opacity: 0, y: -20 }}  // Start from above and invisible
                     animate={{ opacity: 1, y: 0 }}    // End at normal position and fully visible
                     transition={{ duration: 2 }}      // Slow transition for the entire paragraph
@@ -108,7 +108,7 @@ export default function HomeBanner() {
 
               {/* Paragraph 2 Animation (descriptions2) - Bottom to Top */}
                  <motion.p
-                    className="py-md-4 py-2 m-0 p-0"
+                    className="py-md-4 py-3 m-0 p-0"
                     initial={{ opacity: 0, y: 20 }}  // Start from below
                     animate={{ opacity: 1, y: 0 }}    // Move to normal position
                     transition={{

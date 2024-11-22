@@ -8,6 +8,8 @@ import Allpagebanner from "../../assets/homepage-images/allpagebanner.jpg";
 import { Baseurl } from "../../../BaseUrl";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import SinglePageHeader from "@/Components/singlepageheader/SinglePageHeader";
+
 // import RelatedSlider from "@/Components/RelatedproductSlider/RelatedSlider";
 import { useDispatch } from "react-redux";
 import { addItem, toggleCart } from "@/store/slice/cartslice";
@@ -71,16 +73,11 @@ dispatch(toggleCart())
 
   return (
     <>
-      <div className="singpgbanner">
-        <Image src={Allpagebanner} alt="Banner" />
-        <div className="singpg-title text-center">
-          <h1>Shop</h1>
-        </div>
-      </div>
+     <SinglePageHeader  title={singleProduct?.name} pagebanner={Allpagebanner}  />
 
-      <div className="container ">
-        <div className="row py-md-5">
-          <div key={singleProduct.id} className="product col-md-6 col-2 mb-3">
+      <div className="container-md ">
+        <div className="row py-md-5 py-3 pb-5">
+          <div key={singleProduct.id} className="product col-sm-6 col-12 mb-3">
             <div className="singpgfeatrued-img">
               {selectedVariation === null || undefined
                 ? singleProduct?.images?.map((e, i) => (
@@ -102,25 +99,25 @@ dispatch(toggleCart())
             </div>
           </div>
 
-          <div className="col-md-6 singprod-content-col">
+          <div className="col-sm-6 col-12 singprod-content-col">
             <div className="singleproduct-title">
-              <h2>{singleProduct.name}</h2>
+              <h2 className="m-0">{singleProduct.name}</h2>
             </div>
 
             <div className="singleproduct-des">
-              <p
+              <p className="m-0"
                 dangerouslySetInnerHTML={{
                   __html: singleProduct?.short_description,
                 }}
               />
             </div>
 { singleProduct?.type === "variable" &&
-    <div className="variation-select d-flex gap-2 py-2 align-items-center pb-4">
+    <div className="variation-select d-flex gap-2 py-3 align-items-center ">
     <label>{singleProduct?.attributes[0]?.name}</label>
     <select
       id="variations"
       onChange={handleVariationChange}
-      className="form-control"
+      className="form-control form-select"
     >
       <option value="">Choose an option</option>
       {singleProduct?.variations?.map((option, i) =>
@@ -137,7 +134,7 @@ dispatch(toggleCart())
 <h6 className="stock-text">{singleProduct?.stock_quantity  +" "+ singleProduct?.stock_status }</h6>
 }
         
-            <div className="singleproduct-pricing">
+            <div className="singleproduct-pricing py-3 ">
               <h2>
                 {/* PKR{" "}
                         {minPrice === maxPrice

@@ -67,7 +67,7 @@ const ProductTabs = ({ productData,additionalinfo }) => {
       title: "Additional Information",
       content: (
         <div>
-          <h2>Additional information</h2>
+          {/* <h2>Additional information</h2> */}
           <table className="woocommerce-product-attributes shop_attributes" aria-label="Product Details">
             <tbody>
               <tr>
@@ -75,7 +75,7 @@ const ProductTabs = ({ productData,additionalinfo }) => {
 <>
 <th scope="row" key={i}>{e?.name}</th>
 
-<td><p>{e?.options.map((j)=>(j+','))}</p></td>
+<td><p className="m-0">{e?.options.map((j)=>(j+','))}</p></td>
 
 </>
                 ))
@@ -96,7 +96,7 @@ const ProductTabs = ({ productData,additionalinfo }) => {
 
   return (
     <div className="singleproduct-tabs" suppressHydrationWarning >
-      <ul className="tabs wc-tabs py-md-4" role="tablist">
+      <ul className="tabs wc-tabs pb-md-5 pb-3" role="tablist">
         {tabs.map((tab) => (
           <li
             key={tab.id}
