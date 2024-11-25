@@ -121,7 +121,7 @@ dispatch(toggleCart())
     >
       <option value="">Choose an option</option>
       {singleProduct?.variations?.map((option, i) =>
-        option?.price !== "" ? (
+        option?.price !== '' ? (
           <option key={i} value={option.name}>
             {option.name}
           </option>
