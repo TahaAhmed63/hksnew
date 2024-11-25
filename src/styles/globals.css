@@ -1847,7 +1847,64 @@ tbody, td, tfoot, th, thead, tr{
   color: #ffb715 !important;
 }
 
+/* About us page css */
 
+.aboutpg h2{
+  color: #ffb715;
+}
+
+.aboutpg p{
+  font-family: 'interregular';
+  font-size: 16px;
+}
+
+/* branding ambassador page css */
+
+.branding-img img {
+  border-radius: 155px;
+  border: 7px solid #f4a61e;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.branding-img:hover img {
+  transform: translateY(-10px);
+}
+
+.branding-img h3{
+  text-align: center;
+  margin: 30px 0px;
+}
+
+
+.contactform-pg input{
+  width: 100%;
+  padding: 8px;
+}
+
+.contactform-pg textarea{
+  height: 100px;
+}
+.contact-submit-btn input{
+  background: #F4881F !important;
+  color: white !important;
+  padding: 13px 29px !important;
+  border-radius: 52px !important;
+  width: 200px;
+}
+
+.email-col{
+  display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+    align-items: center;
+}
+
+.email-col a,
+.email-col p{
+  color: #000;
+  font-weight: 600;
+}
 
 
 /* Responsiove Css */
@@ -1898,11 +1955,17 @@ tbody, td, tfoot, th, thead, tr{
 
 }
 
-@media (max-width:768px) and (min-width: 350px) {
+@media (max-width:768px) and (min-width: 320px) {
 
   .site-header {
     position: unset !important;
     background-color: #000;
+  }
+
+  .singpgbanner img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
   }
 
    /* banner slider css */
@@ -1957,6 +2020,13 @@ tbody, td, tfoot, th, thead, tr{
   float: right;
 }
 
+/* home page csd video sec */
+
+.video-img-2 {
+  bottom: 20px;
+}
+
+
 /* footer input */
 .mc4wp-form-fields {
   flex-direction: row !important;
@@ -2001,6 +2071,12 @@ tbody, td, tfoot, th, thead, tr{
   padding: 20px;
   margin: 0;
 }
+
+.menuList li a{
+  color: #fff !important;
+  font-size: 18px;
+  text-transform: capitalize;
+  }
 
 .menuList li {
   padding: 10px 0;
@@ -2080,25 +2156,16 @@ tbody, td, tfoot, th, thead, tr{
       background-size: cover !important;
       background-repeat: no-repeat !important;
   }
-  /* .swiper-content p{
-    font-size: 8px;
-    line-height: 10px;
+  /* home page video sec css */
+
+  .video-sec-btn{
+    text-align: center;
   }
 
-  .swiper-content {
-    top: 35%;
-  }
+  .mapplic-svg {
+    width: 100% !important;
+}
 
-  .swiper-content h1 {
-    font-size: 14px;
-    line-height: 20px;
-    border-left: 5px solid #f4a61e;
-  }
-
-  .slider-cta button{
-    font-size: 6px !important;
-    padding: 8px !important;
-  } */
 
   .mainbrief {
   width: 100% !important;
@@ -2140,7 +2207,7 @@ tbody, td, tfoot, th, thead, tr{
   
 .singpgbanner h1 {
   font-size: 24px !important;
-  margin: 3px 0px;
+  margin: 10px 0px;
 }
 .quantity-controls button {
   padding: 5px 11px !important;
@@ -2160,20 +2227,27 @@ tbody, td, tfoot, th, thead, tr{
   display: flex;
 } */
 
-thead {
+.main-tabl-col table thead {
   display: none;
 }
 
-tr td {
+.main-tabl-col tr,
+.main-tabl-col td {
   display: block;
   text-align: right !important;
 }
 
-tr td::before {
+.main-tabl-col tr td::before {
   content: attr(data-title) " ";
   font-weight: 700;
   float: left;
 }
+
+.main-tabl-col img {
+  margin: 0px 25px;
+}
+
+
 
 
 }
@@ -2698,4 +2772,18 @@ button {
 }
 .mapplic-element .mapplic-tooltip * {
   scrollbar-color: #ddd #fff;
+}
+
+
+/* view cart basket page css */
+
+.product-name{
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cartpg-btn-plus,
+.cartpg-btn-minus{
+  padding: 8px 13px !important;
 }

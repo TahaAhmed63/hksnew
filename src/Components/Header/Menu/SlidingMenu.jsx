@@ -1,48 +1,64 @@
-import React, { useState } from 'react'; 
-import MenuLogo from "../../../assets/homepage-images/header-logo.png"; 
-import Link from 'next/link'; 
-import Image from 'next/image'; 
-import { X } from 'lucide-react';  // Import the X icon from lucide-react
+import React, { useState } from 'react';
+import MenuLogo from "../../../assets/homepage-images/header-logo.png";
+import Link from 'next/link';
+import Image from 'next/image';
+import { X } from 'lucide-react'; // Close icon
 
-const SlidingMenu = () => {   
-  const [isOpen, setIsOpen] = useState(false);  
+const SlidingMenu = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {     
-    setIsOpen(!isOpen);  // Toggle the menu open/close state   
-  };  
-
-  const closeMenu = () => {   
-    setIsOpen(false);  // Close the menu by setting isOpen to false   
+  const toggleMenu = () => {
+    setIsOpen(!isOpen); // Toggle the menu state
   };
 
-  return (     
-    <div className='Hamburger-icon-col '>       
-      {/* Hamburger Icon */}       
-      <div className="hamburger" onClick={toggleMenu}> &#9776; {/* Hamburger symbol */}       
-      </div>        
+  const closeMenu = () => {
+    setIsOpen(false); // Close the menu
+  };
 
-      {/* Slider Menu */}       
-      <div className={`sliderMenu ${isOpen ? 'open' : ''} py-4` }>       
-        <Link href="/" rel="home" >           
-          <Image src={MenuLogo} alt="header-logo-img" />           
-        </Link>         
-        
-        {/* Close Button (X) */}        
-        <div className="close-icon" onClick={closeMenu}>   
-          <X />   
+  return (
+    <div className="hamburger-container">
+      {/* Hamburger Icon */}
+      <div className="hamburger" onClick={toggleMenu}>
+        &#9776; {/* Hamburger symbol */}
+      </div>
+
+      {/* Sliding Menu */}
+      <div className={`sliderMenu ${isOpen ? 'open' : ''}`}>
+        {/* Logo */}
+        <div className="menu-header">
+          <Link href="/" rel="home">
+            <Image src={MenuLogo} alt="header-logo-img" width={150} height={50} />
+          </Link>
+          {/* Close Button */}
+          <div className="close-icon" onClick={closeMenu}>
+            <X size={24} />
+          </div>
         </div>
-        
-        <ul className="menuList">                 
-          <li>Home</li>           
-          <li>About Us</li>           
-          <li>Products</li>           
-          <li>Gallery</li>     
-          <li>Ambassadors</li> 
-          <li>Contact Us</li>     
-        </ul>       
-      </div>     
-    </div>   
-  ); 
-};  
+
+        {/* Menu Links */}
+        <ul className="menuList">
+          <li onClick={closeMenu}>
+            <Link href="/" rel="home">Home</Link>
+          </li>
+          <li onClick={closeMenu}>
+            <Link href="/aboutus" rel="aboutus">About Us</Link>
+          </li>
+          <li onClick={closeMenu}>
+            <Link href="/shop" rel="shop">Products</Link>
+          </li>
+          <li onClick={closeMenu}>
+            <Link href="/gallery" rel="gallery">Gallery</Link>
+          </li>
+          <li onClick={closeMenu}>
+            <Link href="/ambassadors" rel="ambassadors">Ambassadors</Link>
+          </li>
+          <li onClick={closeMenu}>
+            <Link href="/contactus" rel="contactus">Contact Us</Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};
 
 export default SlidingMenu;

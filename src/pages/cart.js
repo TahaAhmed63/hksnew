@@ -92,65 +92,69 @@ const Cart = () => {
         </Table> */}
 
 
-
-        <Table striped bordered hover responsive className="mt-4 main-tabl-col">
-          <thead>
-            <tr>
-                <th class="product-name">Product</th>
-                <th class="product-price">Price</th>
-                <th class="product-quantity">Quantity</th>
-                <th class="product-subtotal">Subtotal</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            {cartItems ? cartItems?.map((cartitems,key)=>(
-        <tr>
-
-              <td className="table-remove">
-                <Button variant="danger" size="sm"     onClick={() => handleRemoveItem(cartitems.id, cartitems.variationId)}>
-                  &times;
-                </Button>
-              </td>
+        <div className="main-tabl-col">
+          <Table striped bordered hover responsive className=" ">
+            <thead>
+              <tr>
+                  <th class="product-remove"></th>
+                  <th class="product-name">Product</th>
+                  <th class="product-price">Price</th>
+                  <th class="product-quantity">Quantity</th>
+                  <th class="product-subtotal">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
               
-              <td class="product-name" data-title="Product">
-              <img
-                        src={cartitems?.img?.src || cartitems?.img[0]}
-                        alt={cartitems?.id}
-                        width={80}
-                        height={80}
-                        className="rounded-lg object-cover"
-                      />
-                <span>{cartitems?.name}</span>
-              </td>
+              {cartItems ? cartItems?.map((cartitems,key)=>(
+          <tr>
 
-              <td class="product-name" data-title="Price">
-                {cartitems?.price * cartitems?.quantity}
-              </td>
-              
-              <td class="product-quantity" data-title="Quantity">
-                <Button variant="outline-secondary" size="sm"                       onClick={() => handleDecrementQuantity(cartitems.id, cartitems.variationId)}
-                >
-                  -
-                </Button>
-                <span className="mx-2">{cartitems.quantity}</span>
-                <Button variant="outline-secondary" size="sm"      onClick={() => handleIncrementQuantity(cartitems.id, cartitems.variationId)}>
-                  +
-                </Button>
-              </td>
+                <td class="product-remove" data-title=" "className="table-remove">
+                  <Button variant="danger" size="sm"     onClick={() => handleRemoveItem(cartitems.id, cartitems.variationId)}>
+                    &times;
+                  </Button>
+                </td>
+                
+                <td class="product-name" data-title="Product">
+                <img
+                          src={cartitems?.img?.src || cartitems?.img[0]}
+                          alt={cartitems?.id}
+                          width={80}
+                          height={80}
+                          className="rounded-lg object-cover"
+                        />
+                  <span>{cartitems?.name}</span>
+                </td>
 
-              <td class="product-price" data-title="Price">
-                 {cartitems.price * cartitems.quantity}.00</td>
-              
-        </tr>
-)):null} 
-        
-          </tbody>
-        </Table>
+                <td class="product-price" data-title="Price">
+                  {cartitems?.price * cartitems?.quantity}
+                </td>
+                
+                <td class="product-quantity" data-title="Quantity">
 
+                  <Button variant="outline-secondary cartpg-btn-plus" size="sm" 
+                      onClick={() => handleDecrementQuantity(cartitems.id, cartitems.variationId)} >
+                    -
+                  </Button>
 
+                  <span className="mx-2">{cartitems.quantity}</span>
 
-        <Form className="d-flex mt-3">
+                  <Button variant="outline-secondary cartpg-btn-minus" size="sm"      
+                      onClick={() => handleIncrementQuantity(cartitems.id, cartitems.variationId)}>
+                    +
+                  </Button>
+                </td>
+
+                <td class="product-subtotal" data-title="Subtotal">
+                   {cartitems.price * cartitems.quantity}.00</td>
+                
+          </tr>
+  )):null} 
+          
+            </tbody>
+          </Table>
+        </div>  
+
+        <Form className="d-flex">
           <Form.Control
             type="text"
             placeholder="Coupon code"

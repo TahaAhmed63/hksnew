@@ -28,7 +28,7 @@ const HomeVideoSec = () => {
                 </div>
               </div>
             </div>
-            <div className="col-md-6 video-col">
+            <div className="col-md-6 video-col py-md-0 py-4">
               <div className="video-img">
                 <Image src={Videobgimage} />
               </div>
