@@ -76,7 +76,7 @@ dispatch(toggleCart())
      <SinglePageHeader  title={singleProduct?.name} pagebanner={Allpagebanner}  />
 
       <div className="container-md ">
-        <div className="row py-md-5 py-3 pb-5">
+        <div className="row py-md-5 py-3 pb-4">
           <div key={singleProduct.id} className="product col-sm-6 col-12 mb-3">
             <div className="singpgfeatrued-img">
               {selectedVariation === null || undefined
